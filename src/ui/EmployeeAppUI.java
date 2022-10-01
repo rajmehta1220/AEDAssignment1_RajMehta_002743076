@@ -10,6 +10,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.regex.*;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -36,6 +37,11 @@ public class EmployeeAppUI extends javax.swing.JFrame {
     ArrayList<Employee> employeeList = new ArrayList<Employee>();
     
     Employee employee = new Employee();
+    
+    Pattern pattern;
+    Matcher matcher;
+    
+    static final String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 
     public EmployeeAppUI() {
         initComponents();
@@ -128,6 +134,14 @@ public class EmployeeAppUI extends javax.swing.JFrame {
         searchEmployeeButton = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        jLabel29 = new javax.swing.JLabel();
+        userFilter2 = new javax.swing.JComboBox<>();
+        jLabel30 = new javax.swing.JLabel();
+        userFilter3 = new javax.swing.JComboBox<>();
+        userValue2 = new javax.swing.JTextField();
+        jLabel31 = new javax.swing.JLabel();
+        jLabel32 = new javax.swing.JLabel();
+        userValue3 = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -273,7 +287,7 @@ public class EmployeeAppUI extends javax.swing.JFrame {
                             .addComponent(other))
                         .addComponent(levelTextField)
                         .addComponent(startDateTextField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap(106, Short.MAX_VALUE))
+                .addContainerGap(128, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, creatTabLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(createButton, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -334,7 +348,7 @@ public class EmployeeAppUI extends javax.swing.JFrame {
                     .addComponent(photoLabel)
                     .addComponent(uploadImageButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(createButton, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)
+                .addComponent(createButton, javax.swing.GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE)
                 .addGap(12, 12, 12))
         );
 
@@ -374,7 +388,7 @@ public class EmployeeAppUI extends javax.swing.JFrame {
                     .addComponent(Read, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 522, Short.MAX_VALUE)
                 .addContainerGap())
         );
         readTabLayout.setVerticalGroup(
@@ -389,7 +403,7 @@ public class EmployeeAppUI extends javax.swing.JFrame {
                         .addComponent(Read)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton1)))
-                .addContainerGap(67, Short.MAX_VALUE))
+                .addContainerGap(70, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Read / Delete", readTab);
@@ -445,7 +459,7 @@ public class EmployeeAppUI extends javax.swing.JFrame {
 
         jLabel27.setText("Mobile:");
 
-        jLabel28.setText("Emiail:");
+        jLabel28.setText("Email:");
 
         displayNameUpdate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -504,7 +518,7 @@ public class EmployeeAppUI extends javax.swing.JFrame {
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(jLabel19)
                                     .addComponent(jLabel20))))
-                        .addGap(0, 31, Short.MAX_VALUE))
+                        .addGap(0, 53, Short.MAX_VALUE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel3Layout.createSequentialGroup()
@@ -607,7 +621,7 @@ public class EmployeeAppUI extends javax.swing.JFrame {
                             .addComponent(displayEmailUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
                         .addComponent(updateButton)
                         .addGap(21, 21, 21))))
         );
@@ -622,7 +636,7 @@ public class EmployeeAppUI extends javax.swing.JFrame {
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 498, Short.MAX_VALUE)
+            .addGap(0, 501, Short.MAX_VALUE)
         );
 
         jSplitPane2.setLeftComponent(jPanel4);
@@ -664,41 +678,71 @@ public class EmployeeAppUI extends javax.swing.JFrame {
 
         jLabel3.setText("is");
 
+        jLabel29.setText("Filter 2:");
+
+        userFilter2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ", "name", "employeeId", "age", "gender", "startDate", "level", "teamInfo", "positionTitle", "mobile", "email" }));
+
+        jLabel30.setText("is");
+
+        userFilter3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ", "name", "employeeId", "age", "gender", "startDate", "level", "teamInfo", "positionTitle", "mobile", "email" }));
+
+        jLabel31.setText("Filter 3:");
+
+        jLabel32.setText("is");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(10, 10, 10)
-                                .addComponent(jLabel2))
-                            .addComponent(searchEmployeeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(valueFilter, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(filterEmployee, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(33, 33, 33)
-                        .addComponent(jLabel3)))
+                    .addComponent(searchEmployeeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel29)
+                    .addComponent(jLabel30)
+                    .addComponent(jLabel31)
+                    .addComponent(jLabel32)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(userValue3, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(userFilter3, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(userValue2, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(userFilter2, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(valueFilter, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(filterEmployee, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(62, 62, 62)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(filterEmployee, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel3)
-                .addGap(3, 3, 3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(valueFilter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 274, Short.MAX_VALUE)
+                .addGap(29, 29, 29)
+                .addComponent(jLabel29)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(userFilter2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel30)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(userValue2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(53, 53, 53)
+                .addComponent(jLabel31)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(userFilter3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel32)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(userValue3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
                 .addComponent(searchEmployeeButton)
-                .addGap(19, 19, 19))
+                .addGap(18, 18, 18))
         );
 
         jSplitPane1.setLeftComponent(jPanel1);
@@ -753,39 +797,35 @@ public class EmployeeAppUI extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(64, 64, 64)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(jLabel11)
-                                        .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel12, javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel13, javax.swing.GroupLayout.Alignment.LEADING))
-                                    .addComponent(jLabel6)
-                                    .addComponent(jLabel4)
-                                    .addComponent(jLabel8)
-                                    .addComponent(jLabel7)
-                                    .addComponent(jLabel9))
-                                .addGap(32, 32, 32)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(displayName)
-                                    .addComponent(displayAge)
-                                    .addComponent(displayGender)
-                                    .addComponent(displayStartDate)
-                                    .addComponent(displayLevel)
-                                    .addComponent(displayTeamInfo)
-                                    .addComponent(displayPositionTitle)
-                                    .addComponent(displayMobile)
-                                    .addComponent(displayEmail, javax.swing.GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE)))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel5)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(displayEid, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jLabel11)
+                                .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel12, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel13, javax.swing.GroupLayout.Alignment.LEADING))
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel8)
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel9)
+                            .addComponent(jLabel5))
+                        .addGap(32, 32, 32)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(displayName)
+                            .addComponent(displayAge)
+                            .addComponent(displayGender)
+                            .addComponent(displayStartDate)
+                            .addComponent(displayLevel)
+                            .addComponent(displayTeamInfo)
+                            .addComponent(displayPositionTitle)
+                            .addComponent(displayMobile)
+                            .addComponent(displayEmail)
+                            .addComponent(displayEid, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(103, 103, 103)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(displayPic, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel1))))
-                .addContainerGap(166, Short.MAX_VALUE))
+                .addContainerGap(188, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -797,14 +837,11 @@ public class EmployeeAppUI extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(displayName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel5)
-                        .addGap(12, 12, 12))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addComponent(displayEid, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)))
+                .addGap(12, 12, 12)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(displayEid, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(displayAge, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -890,55 +927,202 @@ public class EmployeeAppUI extends javax.swing.JFrame {
 
         String userChosenFilter = filterEmployee.getSelectedItem().toString();
         String isFilter = valueFilter.getText().toString();
-        int rows = employeeTable.getRowCount();
-        String filterChecker = null;
-
-        for (int i=0; i<rows; i++){
-            Object obj1 = employeeTable.getValueAt(i, filterKeys.get(userChosenFilter));
-            String filterValCheck = obj1.toString();
-            filterChecker = filterValCheck;
-            if(filterValCheck == isFilter.toString()){
-                index = i;
-            }
+        
+        String userFilter_2 = userFilter2.getSelectedItem().toString();
+        String isValue_2 = userValue2.getText().toString();
+        
+        String userFilter_3 = userFilter3.getSelectedItem().toString();
+        String isValue_3 = userValue3.getText().toString();
+        
+        if(userChosenFilter == userFilter_2 || userChosenFilter == userFilter_3){
+            JOptionPane.showMessageDialog(null, "Cannot select same filter");
         }
-        System.out.println("filterChecker: "+filterChecker);
-        System.out.println("isFilter: "+isFilter);
-
-        for(Employee i: employeeList){
-            if(filterChecker.equals(isFilter)){
-                row[0] = i.getName();
-                row[1] = i.getEmployeeId();
-                row[2] = i.getAge();
-                row[3] = i.getGender();
-                row[4] = i.getStartDate();
-                row[5] = i.getLevel();
-                row[6] = i.getTeamInfo();
-                row[7] = i.getPositionTitle();
-                row[8] = i.getCellPhoneNumber();
-                row[9] = i.getEmail();
-                row[10] = i.getPhoto();
-            }
-            else{System.out.println("Skipped");}
+        else if ((userFilter_2 == userFilter_3) && (userFilter_2 != " ")){
+            JOptionPane.showMessageDialog(null, "Cannot select same filter");
         }
+        else{
+            if((userFilter_2 == " ") && (userFilter_3 == " ")){
+                int rows = employeeTable.getRowCount();
+                String filterChecker = null;
 
-        displayName.setText(String.valueOf(row[0]));
-        displayEid.setText(String.valueOf(row[1]));
-        displayAge.setText(String.valueOf(row[2]));
-        displayGender.setText(String.valueOf(row[3]));
-        displayStartDate.setText(String.valueOf(row[4]));
-        displayLevel.setText(String.valueOf(row[5]));
-        displayTeamInfo.setText(String.valueOf(row[6]));
-        displayPositionTitle.setText(String.valueOf(row[7]));
-        displayMobile.setText(String.valueOf(row[8]));
-        displayEmail.setText(String.valueOf(row[9]));
+                for (int i=0; i<rows; i++){
+                    Object obj1 = employeeTable.getValueAt(i, filterKeys.get(userChosenFilter));
+                    String filterValCheck = obj1.toString();
+                    filterChecker = filterValCheck;
+                    if(filterValCheck == isFilter.toString()){
+                        index = i;
+                    }
+                }
+                
+                System.out.println("filterChecker: "+filterChecker);
+                System.out.println("isFilter: "+isFilter);
 
-        String imgPath = String.valueOf(row[10]);
-        FileNameExtensionFilter fnef = new FileNameExtensionFilter("IMAGES", "png", "jpeg", "jpg");
-        JFileChooser browseFile = new JFileChooser();
-        ImageIcon img = new ImageIcon(imgPath);
+                for(Employee i: employeeList){
+                    if(filterChecker.equals(isFilter) ){
+                        row[0] = i.getName();
+                        row[1] = i.getEmployeeId();
+                        row[2] = i.getAge();
+                        row[3] = i.getGender();
+                        row[4] = i.getStartDate();
+                        row[5] = i.getLevel();
+                        row[6] = i.getTeamInfo();
+                        row[7] = i.getPositionTitle();
+                        row[8] = i.getCellPhoneNumber();
+                        row[9] = i.getEmail();
+                        row[10] = i.getPhoto();
+                    }
+                    else{System.out.println("Skipped");}
+                }
 
-        Image image = img.getImage().getScaledInstance(displayPic.getWidth(), displayPic.getHeight(), Image.SCALE_SMOOTH);
-        displayPic.setIcon(new ImageIcon(image));
+                displayName.setText(String.valueOf(row[0]));
+                displayEid.setText(String.valueOf(row[1]));
+                displayAge.setText(String.valueOf(row[2]));
+                displayGender.setText(String.valueOf(row[3]));
+                displayStartDate.setText(String.valueOf(row[4]));
+                displayLevel.setText(String.valueOf(row[5]));
+                displayTeamInfo.setText(String.valueOf(row[6]));
+                displayPositionTitle.setText(String.valueOf(row[7]));
+                displayMobile.setText(String.valueOf(row[8]));
+                displayEmail.setText(String.valueOf(row[9]));
+
+                String imgPath = String.valueOf(row[10]);
+                FileNameExtensionFilter fnef = new FileNameExtensionFilter("IMAGES", "png", "jpeg", "jpg");
+                JFileChooser browseFile = new JFileChooser();
+                ImageIcon img = new ImageIcon(imgPath);
+
+                Image image = img.getImage().getScaledInstance(displayPic.getWidth(), displayPic.getHeight(), Image.SCALE_SMOOTH);
+                displayPic.setIcon(new ImageIcon(image));
+            }
+            if((userFilter_2 != " ") && (userFilter_3 == " ")){
+                int rows = employeeTable.getRowCount();
+                String filterChecker = null;
+                String filterChecker_2 = null;
+                
+                for (int i=0; i<rows; i++){
+                    Object obj1 = employeeTable.getValueAt(i, filterKeys.get(userChosenFilter));
+                    String filterValCheck = obj1.toString();
+                    filterChecker = filterValCheck;
+                    
+                    Object obj2 = employeeTable.getValueAt(i, filterKeys.get(userFilter_2));
+                    String filterValCheck_2 = obj2.toString();
+                    filterChecker_2 = filterValCheck_2;
+                    
+                    if((filterValCheck == isFilter.toString()) && (filterValCheck_2 == userValue2.toString())){
+                        index = i;
+                    }
+                    
+                }
+                
+                System.out.println("filterChecker: "+filterChecker);
+                System.out.println("isFilter: "+isFilter);
+
+                for(Employee i: employeeList){
+                    if(filterChecker.equals(isFilter)){
+                        row[0] = i.getName();
+                        row[1] = i.getEmployeeId();
+                        row[2] = i.getAge();
+                        row[3] = i.getGender();
+                        row[4] = i.getStartDate();
+                        row[5] = i.getLevel();
+                        row[6] = i.getTeamInfo();
+                        row[7] = i.getPositionTitle();
+                        row[8] = i.getCellPhoneNumber();
+                        row[9] = i.getEmail();
+                        row[10] = i.getPhoto();
+                    }
+                    else{System.out.println("Skipped");}
+                }
+
+                displayName.setText(String.valueOf(row[0]));
+                displayEid.setText(String.valueOf(row[1]));
+                displayAge.setText(String.valueOf(row[2]));
+                displayGender.setText(String.valueOf(row[3]));
+                displayStartDate.setText(String.valueOf(row[4]));
+                displayLevel.setText(String.valueOf(row[5]));
+                displayTeamInfo.setText(String.valueOf(row[6]));
+                displayPositionTitle.setText(String.valueOf(row[7]));
+                displayMobile.setText(String.valueOf(row[8]));
+                displayEmail.setText(String.valueOf(row[9]));
+
+                String imgPath = String.valueOf(row[10]);
+                FileNameExtensionFilter fnef = new FileNameExtensionFilter("IMAGES", "png", "jpeg", "jpg");
+                JFileChooser browseFile = new JFileChooser();
+                ImageIcon img = new ImageIcon(imgPath);
+
+                Image image = img.getImage().getScaledInstance(displayPic.getWidth(), displayPic.getHeight(), Image.SCALE_SMOOTH);
+                displayPic.setIcon(new ImageIcon(image));
+            
+            }
+            if((userFilter_2 != " ") && (userFilter_3 != " ")){
+                int rows = employeeTable.getRowCount();
+                String filterChecker = null;
+                String filterChecker_2 = null;
+                String filterChecker_3 = null;
+                
+                for (int i=0; i<rows; i++){
+                    Object obj1 = employeeTable.getValueAt(i, filterKeys.get(userChosenFilter));
+                    String filterValCheck = obj1.toString();
+                    filterChecker = filterValCheck;
+                    
+                    Object obj2 = employeeTable.getValueAt(i, filterKeys.get(userFilter_2));
+                    String filterValCheck_2 = obj2.toString();
+                    filterChecker_2 = filterValCheck_2;
+                    
+                    Object obj3 = employeeTable.getValueAt(i, filterKeys.get(userFilter_3));
+                    String filterValCheck_3 = obj3.toString();
+                    filterChecker_3 = filterValCheck_3;
+                    
+                    if((filterValCheck == isFilter.toString()) && (filterValCheck_2 == userValue2.toString()) && (filterValCheck_3 == userValue3.toString())){
+                        index = i;
+                    }
+                    
+                }
+                
+                System.out.println("filterChecker: "+filterChecker);
+                System.out.println("isFilter: "+isFilter);
+
+                for(Employee i: employeeList){
+                    if(filterChecker.equals(isFilter)){
+                        row[0] = i.getName();
+                        row[1] = i.getEmployeeId();
+                        row[2] = i.getAge();
+                        row[3] = i.getGender();
+                        row[4] = i.getStartDate();
+                        row[5] = i.getLevel();
+                        row[6] = i.getTeamInfo();
+                        row[7] = i.getPositionTitle();
+                        row[8] = i.getCellPhoneNumber();
+                        row[9] = i.getEmail();
+                        row[10] = i.getPhoto();
+                    }
+                    else{System.out.println("Skipped");}
+                }
+
+                displayName.setText(String.valueOf(row[0]));
+                displayEid.setText(String.valueOf(row[1]));
+                displayAge.setText(String.valueOf(row[2]));
+                displayGender.setText(String.valueOf(row[3]));
+                displayStartDate.setText(String.valueOf(row[4]));
+                displayLevel.setText(String.valueOf(row[5]));
+                displayTeamInfo.setText(String.valueOf(row[6]));
+                displayPositionTitle.setText(String.valueOf(row[7]));
+                displayMobile.setText(String.valueOf(row[8]));
+                displayEmail.setText(String.valueOf(row[9]));
+
+                String imgPath = String.valueOf(row[10]);
+                FileNameExtensionFilter fnef = new FileNameExtensionFilter("IMAGES", "png", "jpeg", "jpg");
+                JFileChooser browseFile = new JFileChooser();
+                ImageIcon img = new ImageIcon(imgPath);
+
+                Image image = img.getImage().getScaledInstance(displayPic.getWidth(), displayPic.getHeight(), Image.SCALE_SMOOTH);
+                displayPic.setIcon(new ImageIcon(image));
+            
+            }
+            if((userFilter_2 == " ") && (userFilter_3 != " ")){JOptionPane.showMessageDialog(null, "Please select filter 2 before Filter 3");}
+        
+        }//end else    
+        
+        
     }//GEN-LAST:event_searchEmployeeButtonActionPerformed
 
     private void filterEmployeeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_filterEmployeeActionPerformed
@@ -948,7 +1132,21 @@ public class EmployeeAppUI extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         DefaultTableModel model = (DefaultTableModel) employeeTable.getModel();
-        model.removeRow(employeeTable.getSelectedRow());
+        Object delObj = new Object();
+        int index = employeeTable.getSelectedRow();
+        
+        System.out.println("Index:" +index);
+        if(index<1){
+            JOptionPane.showMessageDialog(null, "Please Select a record");
+        }
+        else{
+            delObj = employeeList.get(index);
+            System.out.print("Del Obj" +delObj);
+            employeeList.remove(delObj);
+            model.removeRow(employeeTable.getSelectedRow());
+        }
+        
+       
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void ReadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ReadActionPerformed
@@ -995,7 +1193,8 @@ public class EmployeeAppUI extends javax.swing.JFrame {
         HashMap<String, Integer> filterKeys = new HashMap<String, Integer>();
         Object row[] = new Object[11];
         int index = 0;
-        //        name, employeeId, age, gender, startDate, level, teamInfo, positionTitle, mobile, email
+        int flag =0;
+        
         filterKeys.put("name", 0);
         filterKeys.put("employeeId", 1);
         filterKeys.put("age", 2);
@@ -1006,7 +1205,7 @@ public class EmployeeAppUI extends javax.swing.JFrame {
         filterKeys.put("positionTitle", 7);
         filterKeys.put("mobile", 8);
         filterKeys.put("email", 9);
-
+        
         String userChosenFilter = filterUpdate.getSelectedItem().toString();
         String isFilter = inValueUpdate.getText().toString();
         int rows = employeeTable.getRowCount();
@@ -1015,69 +1214,82 @@ public class EmployeeAppUI extends javax.swing.JFrame {
         String userUpdateFilter = filterUpdateNew.getSelectedItem().toString();
         String isValue = updateValueNew.getText().toString();
 
+        int new_index = filterKeys.get(userUpdateFilter);
+        System.out.println("New Index: "+ new_index);
+     
         for (int i=0; i<rows; i++){
             Object obj1 = employeeTable.getValueAt(i, filterKeys.get(userChosenFilter));
             String filterValCheck = obj1.toString();
             filterChecker = filterValCheck;
-            if(filterValCheck == isFilter.toString()){
+            System.out.println("obj: "+filterValCheck+ " "+ "from ui: " +isFilter);
+            if(filterValCheck.equals(isFilter)){
                 index = i;
+                flag+=1;
+                System.out.println("Flag inc");
             }
+            System.out.println("Loop");
         }
-        System.out.println("filterChecker: "+filterChecker);
-        System.out.println("isFilter: "+isFilter);
+        
+        if(flag == 0){JOptionPane.showMessageDialog(null, "Entry Not Found");}
+        else if(flag>=2){JOptionPane.showMessageDialog(null, "Multiple Entries Found");}
+        else{
+            System.out.println("filterChecker: "+filterChecker);
+            System.out.println("isFilter: "+isFilter);
 
-        for(Employee i: employeeList){
-            if(filterChecker.equals(isFilter)){
-                row[0] = i.getName();
-                row[1] = i.getEmployeeId();
-                row[2] = i.getAge();
-                row[3] = i.getGender();
-                row[4] = i.getStartDate();
-                row[5] = i.getLevel();
-                row[6] = i.getTeamInfo();
-                row[7] = i.getPositionTitle();
-                row[8] = i.getCellPhoneNumber();
-                row[9] = i.getEmail();
-                row[10] = i.getPhoto();
-           
-                row[index]= isValue;
-                
-                if(userUpdateFilter == "name"){i.setName(isValue);}
-                if(userUpdateFilter == "employeeId"){i.setEmployeeId(Integer.parseInt(isValue));}
-                if(userUpdateFilter == "age"){i.setAge(Integer.parseInt(isValue));}
-                if(userUpdateFilter == "gender"){i.setGender(String.valueOf(isValue));}
-                if(userUpdateFilter == "startDate"){i.setStartDate(String.valueOf(isValue));}
-                if(userUpdateFilter == "level"){i.setLevel(String.valueOf(isValue));}
-                if(userUpdateFilter == "teamInfo"){i.setTeamInfo(String.valueOf(isValue));}
-                if(userUpdateFilter == "positionTitle"){i.setPositionTitle(String.valueOf(isValue));}
-                if(userUpdateFilter == "mobile"){i.setCellPhoneNumber(Double.parseDouble(isValue));}
-                if(userUpdateFilter == "email"){i.setEmail(String.valueOf(isValue));}
-                
-                
+            for(Employee i: employeeList){
+                if(filterChecker.equals(isFilter)){
+                    row[0] = i.getName();
+                    row[1] = i.getEmployeeId();
+                    row[2] = i.getAge();
+                    row[3] = i.getGender();
+                    row[4] = i.getStartDate();
+                    row[5] = i.getLevel();
+                    row[6] = i.getTeamInfo();
+                    row[7] = i.getPositionTitle();
+                    row[8] = i.getCellPhoneNumber();
+                    row[9] = i.getEmail();
+                    row[10] = i.getPhoto();
+
+                    row[new_index]= isValue;
+
+                    if(userUpdateFilter == "name"){i.setName(isValue);}
+                    if(userUpdateFilter == "employeeId"){i.setEmployeeId(Integer.parseInt(isValue));}
+                    if(userUpdateFilter == "age"){i.setAge(Integer.parseInt(isValue));}
+                    if(userUpdateFilter == "gender"){i.setGender(String.valueOf(isValue));}
+                    if(userUpdateFilter == "startDate"){i.setStartDate(String.valueOf(isValue));}
+                    if(userUpdateFilter == "level"){i.setLevel(String.valueOf(isValue));}
+                    if(userUpdateFilter == "teamInfo"){i.setTeamInfo(String.valueOf(isValue));}
+                    if(userUpdateFilter == "positionTitle"){i.setPositionTitle(String.valueOf(isValue));}
+                    if(userUpdateFilter == "mobile"){i.setCellPhoneNumber(Double.parseDouble(isValue));}
+                    if(userUpdateFilter == "email"){i.setEmail(String.valueOf(isValue));}
+
+
+                }
+                else{
+                    JOptionPane.showMessageDialog(null, "Entry Not Found");
+                }
             }
-            else{
-                JOptionPane.showMessageDialog(null, "Entry Not Found");
-            }
+
+            displayNameUpdate.setText(String.valueOf(row[0]));
+            displayEidUpdate.setText(String.valueOf(row[1]));
+            displayAgeUpdate.setText(String.valueOf(row[2]));
+            displayGenderUpdate.setText(String.valueOf(row[3]));
+            displayStartDateUpdate.setText(String.valueOf(row[4]));
+            displayLevelUpdate.setText(String.valueOf(row[5]));
+            displayTeamInfoUpdate.setText(String.valueOf(row[6]));
+            displayPositionTitleUpdate.setText(String.valueOf(row[7]));
+            displayMobileUpdate.setText(String.valueOf(row[8]));
+            displayEmailUpdate.setText(String.valueOf(row[9]));
+
+            String imgPath = String.valueOf(row[10]);
+            FileNameExtensionFilter fnef = new FileNameExtensionFilter("IMAGES", "png", "jpeg", "jpg");
+            JFileChooser browseFile = new JFileChooser();
+            ImageIcon img = new ImageIcon(imgPath);
+
+            Image image = img.getImage().getScaledInstance(displayImgUpdate.getWidth(), displayImgUpdate.getHeight(), Image.SCALE_SMOOTH);
+            displayImgUpdate.setIcon(new ImageIcon(image));
         }
-
-        displayNameUpdate.setText(String.valueOf(row[0]));
-        displayEidUpdate.setText(String.valueOf(row[1]));
-        displayAgeUpdate.setText(String.valueOf(row[2]));
-        displayGenderUpdate.setText(String.valueOf(row[3]));
-        displayStartDateUpdate.setText(String.valueOf(row[4]));
-        displayLevelUpdate.setText(String.valueOf(row[5]));
-        displayTeamInfoUpdate.setText(String.valueOf(row[6]));
-        displayPositionTitleUpdate.setText(String.valueOf(row[7]));
-        displayMobileUpdate.setText(String.valueOf(row[8]));
-        displayEmailUpdate.setText(String.valueOf(row[9]));
-
-        String imgPath = String.valueOf(row[10]);
-        FileNameExtensionFilter fnef = new FileNameExtensionFilter("IMAGES", "png", "jpeg", "jpg");
-        JFileChooser browseFile = new JFileChooser();
-        ImageIcon img = new ImageIcon(imgPath);
-
-        Image image = img.getImage().getScaledInstance(displayImgUpdate.getWidth(), displayImgUpdate.getHeight(), Image.SCALE_SMOOTH);
-        displayImgUpdate.setIcon(new ImageIcon(image));
+        
     }//GEN-LAST:event_updateButtonActionPerformed
 
     private void displayNameUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_displayNameUpdateActionPerformed
@@ -1138,7 +1350,11 @@ public class EmployeeAppUI extends javax.swing.JFrame {
 
     private void createButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createButtonActionPerformed
         // TODO add your handling code here:
-
+        Employee employee = new Employee();
+        
+        employee.setPhoto(uploadImgPath);
+        JOptionPane.showMessageDialog(null, "Save Successful");
+        
         employee.setName(nameTextField.getText());
         employee.setEmployeeId(Integer.parseInt(employeeIDTextField.getText()));
         employee.setAge(Integer.parseInt(ageTextField.getText()));
@@ -1163,10 +1379,8 @@ public class EmployeeAppUI extends javax.swing.JFrame {
         employee.setPositionTitle(positionTitleTextField.getText());
         employee.setCellPhoneNumber(Double.parseDouble(mobileTextField.getText()));
         employee.setEmail(emailTextField.getText());
-        employee.setPhoto(uploadImgPath);
-
+        
         employeeList.add(employee);
-        JOptionPane.showMessageDialog(null, "Save Successful");
     }//GEN-LAST:event_createButtonActionPerformed
 
     private void updateValueNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateValueNewActionPerformed
@@ -1272,7 +1486,11 @@ public class EmployeeAppUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel28;
+    private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel30;
+    private javax.swing.JLabel jLabel31;
+    private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -1308,6 +1526,10 @@ public class EmployeeAppUI extends javax.swing.JFrame {
     private javax.swing.JPanel updateTab;
     private javax.swing.JTextField updateValueNew;
     private javax.swing.JButton uploadImageButton;
+    private javax.swing.JComboBox<String> userFilter2;
+    private javax.swing.JComboBox<String> userFilter3;
+    private javax.swing.JTextField userValue2;
+    private javax.swing.JTextField userValue3;
     private javax.swing.JTextField valueFilter;
     // End of variables declaration//GEN-END:variables
 
