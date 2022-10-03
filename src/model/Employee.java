@@ -4,133 +4,118 @@
  */
 package model;
 
+import java.util.Date;
+
 /**
  *
  * @author rajmehta
  */
-
 public class Employee {
-
-	int employeeId, age;
-	double cellPhoneNumber;
-	String  name, gender, startDate, level, teamInfo, positionTitle, email, photo;
-	
-		public Employee() {
-		// TODO Auto-generated constructor stub
-	}
-
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
-	}
-
-	public Employee(int employeeId, int age, double cellPhoneNumber, String name, String gender, String startDate,
-			String level, String teamInfo, String positionTitle, String email, String photo) {
-		super();
-		this.employeeId = employeeId;
-		this.age = age;
-		this.cellPhoneNumber = cellPhoneNumber;
-		this.name = name;
-		this.gender = gender;
-		this.startDate = startDate;
-		this.level = level;
-		this.teamInfo = teamInfo;
-		this.positionTitle = positionTitle;
-		this.email = email;
-		this.photo = photo;
-	}
-
-	public int getEmployeeId() {
-		return employeeId;
-	}
-
-	public void setEmployeeId(int employeeId) {
-		this.employeeId = employeeId;
-	}
-
-	public int getAge() {
-		return age;
-	}
-
-	public void setAge(int age) {
-		this.age = age;
-	}
-
-	public double getCellPhoneNumber() {
-		return cellPhoneNumber;
-	}
-
-	public void setCellPhoneNumber(double cellPhoneNumber) {
-		this.cellPhoneNumber = cellPhoneNumber;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getGender() {
-		return gender;
-	}
+    
+    private String name;
+    private int employeeID;
+    private int age;
+    private String gender;
+    private Date startDate;
+    private String level;
+    private String teamInfo;
+    private String positionTitle;
+    private long cellPhoneNumber;
+    private String emailAddress;
+    private String photo;
 
     @Override
     public String toString() {
-        return "Employee{" + ", age=" + age + ", cellPhoneNumber=" + cellPhoneNumber + ", name=" + name + ", gender=" + gender + ", startDate=" + startDate + ", level=" + level + ", teamInfo=" + teamInfo + ", positionTitle=" + positionTitle + ", email=" + email + ", photo=" + photo + '}';
+        return name;
     }
 
-	public void setGender(String gender) {
-		this.gender = gender;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public String getStartDate() {
-		return startDate;
-	}
+    public void setName(String Name) {
+        this.name = Name;
+    }
 
-	public void setStartDate(String startDate) {
-		this.startDate = startDate;
-	}
+    public int getEmployeeID() {
+        return employeeID;
+    }
 
-	public String getLevel() {
-		return level;
-	}
+    public void setEmployeeID(int EmployeeID) {
+        this.employeeID = EmployeeID;
+    }
 
-	public void setLevel(String level) {
-		this.level = level;
-	}
+    public int getAge() {
+        return age;
+    }
 
-	public String getTeamInfo() {
-		return teamInfo;
-	}
+    public void setAge(int Age) {
+        this.age = Age;
+    }
 
-	public void setTeamInfo(String teamInfo) {
-		this.teamInfo = teamInfo;
-	}
+    public String getGender() {
+        return gender;
+    }
 
-	public String getPositionTitle() {
-		return positionTitle;
-	}
+    public void setGender(String Gender) {
+        this.gender = Gender;
+    }
 
-	public void setPositionTitle(String positionTitle) {
-		this.positionTitle = positionTitle;
-	}
+    public Date getStartDate() {
+        return startDate;
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    public void setStartDate(Date StartDate) {
+        this.startDate = StartDate;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public String getLevel() {
+        return level;
+    }
 
-	public String getPhoto() {
-		return photo;
-	}
+    public void setLevel(String Level) {
+        this.level = Level;
+    }
 
-	public void setPhoto(String photo) {
-		this.photo = photo;
-	}
+    public String getTeamInfo() {
+        return teamInfo;
+    }
 
+    public void setTeamInfo(String TeamInfo) {
+        this.teamInfo = TeamInfo;
+    }
+
+    public String getPositionTitle() {
+        return positionTitle;
+    }
+
+    public void setPositionTitle(String PositionTitle) {
+        this.positionTitle = PositionTitle;
+    }
+
+    public long getCellPhoneNumber() {
+        return cellPhoneNumber;
+    }
+
+    public void setCellPhoneNumber(long CellPhoneNumber) {
+        this.cellPhoneNumber = CellPhoneNumber;
+    }
+
+    public String getEmailAddress() {
+        return emailAddress;
+    }
+
+    public void setEmailAddress(String EmailAddress) {
+        this.emailAddress = EmailAddress;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String Photo) {
+        this.photo = Photo;
+    }
+    
+    
 }
