@@ -6,12 +6,12 @@
 
 * Technical Dscription - In this Iteration I have used java Swing (https://docs.oracle.com/javase/tutorial/uiswing/) for the front-end of the application. Here I have used two packages viz: model which contains Employee.java file and EmployeeHistory.java and another package UI which contains MainFrame.jav, CreatePanel.java, ReadPanel.java, UpdatePanel.java and SearchPanel.java. No database have been used for this iteration I have stored Employee details (objects) in an ArrayList and same ArrayList is iterated for various CRUD and Search operations.
   
-  *Package Model :
+  * Package Model :
     * Employee.java - conatins all data variables like name, employee_id, age, Gender, joining Date, profile picture etc. This class just as constuctor, Getters and setters & a toString method (used to return string value of variables instead of address).
     
     * EmployeeHistory.java - contains ArrayList of DataType Employee and its stores employee details ~ basically employee objects. It also has addEmployeeDetails method.
   
-  *Package Ui :
+  * Package Ui :
     * MainFrameUi - Contains main UI page, with 4 buttons for CRUD and Search operation. On click of button a panel is loaded on right.
     
     * CreatePanel - Contains Basic form for input of new Employee record. Validation functionality for EmployeeID, age, mobile number and Email is also added.
