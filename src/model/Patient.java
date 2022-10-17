@@ -16,7 +16,7 @@ public class Patient {
     private long id;
     Person person;
     static long count = 0;
-//    EncounterHistory encounterHistory;
+    EncounterHistory encounterHistory;
     public Patient(){}
     
     public Patient(Person person){   
@@ -25,24 +25,24 @@ public class Patient {
         this.person = person;
         
         //Create patient specific encounter history 
-//        this.encounterHistory = createEncounterHistory();
+        this.encounterHistory = createEncounterHistory();
         
     }
     
-//    public EncounterHistory createEncounterHistory(){
-//        
-//        return new EncounterHistory(this);
-//    }
-//
-//    public EncounterHistory getEncounterHistory() {
-//        return encounterHistory;
-//    }
-//    
-//    public ArrayList<Encounter> getPatientEncounterHistory(){
-//        
-//        return this.encounterHistory.getEncounterList();
-//        
-//    }
+    public EncounterHistory createEncounterHistory(){
+        
+        return new EncounterHistory(this);
+    }
+
+    public EncounterHistory getEncounterHistory() {
+        return encounterHistory;
+    }
+    
+    public ArrayList<Encounter> getPatientEncounterHistory(){
+        
+        return this.encounterHistory.getEncounterList();
+        
+    }
     
     public long getId() {
         return id;

@@ -17,6 +17,7 @@ public class MainFrame extends javax.swing.JFrame {
     String[] communityList;
     PatientDirectory patDir;
     Hospital newHospital;
+    HospitalDirectory hospDir;
     /**
      * Creates new form MainFrame
      */
@@ -161,10 +162,15 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void doctor_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_doctor_buttonActionPerformed
         // TODO add your handling code here:
+        DoctorPanel doctorpanel = new DoctorPanel(patDir);
+        splitpane.setRightComponent(doctorpanel);
+
     }//GEN-LAST:event_doctor_buttonActionPerformed
 
     private void comadmin_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comadmin_buttonActionPerformed
         // TODO add your handling code here:
+        CommunityAdminPanel commPanel = new CommunityAdminPanel(city, communityList);
+        splitpane.setRightComponent(commPanel);
     }//GEN-LAST:event_comadmin_buttonActionPerformed
 
     private void hospitaladmin_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hospitaladmin_buttonActionPerformed
@@ -177,13 +183,14 @@ public class MainFrame extends javax.swing.JFrame {
         Parser parser = new Parser();
         LocalDate date =parser.convertToDate(dob);
         
-        Person p1 = new Person(02323232323, "Raj", date, "Suffolk"); //doc
-        Person p2 = new Person(02323232323, "Het", date, "Suffolk"); //pat
-        Person p3 = new Person(02323232323, "Sneh", date, "Suffolk"); //pat
+        PersonDirectory pd = new PersonDirectory();
+        Person p1 = pd.createPerson(02323232323, "Raj", date, "Suffolk");//doc
+        Person p2 = pd.createPerson(02323232323, "Het", date, "Suffolk"); //pat
+        Person p3 = pd.createPerson(02323232323, "Sneh", date, "Suffolk"); //pat
         
-        Person p4 = new Person(02323232323, "Heet", date, "Sapphire");  //pat
-        Person p5 = new Person(02323232323, "Varu", date, "Sapphire"); //doc
-        Person p6 = new Person(02323232323, "Dhb", date, "Sapphire"); //doc
+        Person p4 = pd.createPerson(02323232323, "Heet", date, "Sapphire");  //pat
+        Person p5 = pd.createPerson(02323232323, "Varu", date, "Sapphire"); //doc
+        Person p6 = pd.createPerson(02323232323, "Dhb", date, "Sapphire"); //doc
         
         patDir = new PatientDirectory();
         patDir.createPatient(p2);
@@ -196,24 +203,27 @@ public class MainFrame extends javax.swing.JFrame {
             System.out.println(i.getId());
             System.out.println(i.getPerson().getName());
         }
-        
-        House h1 = new House(1,"111 Huntington Ave", "Suffolk","Boston");
-        h1.addPersonToHouse(p3);
-        h1.addPersonToHouse(p2);
-        House h2 = new House(2,"222 Huntington Ave", "Suffolk","Boston");
-        h1.addPersonToHouse(p1);
-       
-        House h3 = new House(45,"222 Sapphire Ave", "Sapphire","Boston");
-        h1.addPersonToHouse(p4);
-        h1.addPersonToHouse(p5);
-        House h4 = new House(56,"222 Sapphire Ave", "Sapphire","Boston");
-        h1.addPersonToHouse(p6);
 
         city = new City("Boston");
         Community comm_suffolk = city.newCommunity("Suffolk");
         Community comm_sapphire = city.newCommunity("Sapphire");
         
+        House h1 = comm_suffolk.createHouse(1,"111 Huntington Ave", "Suffolk","Boston");
+        h1.addPersonToHouse(p3);
+        h1.addPersonToHouse(p2);
+        House h2 = comm_suffolk.createHouse(2,"222 Huntington Ave", "Suffolk","Boston");
+        h2.addPersonToHouse(p1);
+       
+        House h3 = comm_sapphire.createHouse(45,"222 Sapphire Ave", "Sapphire","Boston");
+        h3.addPersonToHouse(p4);
+        h3.addPersonToHouse(p5);
+        House h4 = comm_sapphire.createHouse(56,"222 Sapphire Ave", "Sapphire","Boston");
+        h4.addPersonToHouse(p6);
+        
+        hospDir = new HospitalDirectory();
+        
         newHospital = comm_suffolk.createHospital(1,  "112 Huntington Ave","Suffolk", "Boston");
+        hospDir.addHospital(newHospital);
         Doctor d = new Doctor(p1);
         newHospital.addDoctorToHospital(d);
         newHospital = comm_sapphire.createHospital(2,  "Sapphire Ave","Sapphire", "Boston");
@@ -221,6 +231,8 @@ public class MainFrame extends javax.swing.JFrame {
         Doctor d2 = new Doctor(p5);
         newHospital.addDoctorToHospital(d1);
         newHospital.addDoctorToHospital(d2);
+        hospDir.addHospital(newHospital);
+        
         
         ArrayList<Community> commList = new ArrayList<Community>();
         commList = city.getCommList();

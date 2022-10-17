@@ -23,6 +23,10 @@ public class HospitalDirectory {
         return newHospital;
     }
     
+    public void addHospital(Hospital hospital){
+        this.getHospitalList().add(hospital);
+    }
+    
     public ArrayList<Hospital> getHospitalList() {
         return hospitalList;
     }
