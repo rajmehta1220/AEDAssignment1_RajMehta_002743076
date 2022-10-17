@@ -61,6 +61,36 @@ public class House {
         this.getFamiliyMembers().add(member);
     
     }
+
+    public void setHouseNum(int houseNum) {
+        this.houseNum = houseNum;
+    }
+
+    public void setUnitNum(String unitNum) {
+        this.unitNum = unitNum;
+    }
+
+    public void setStreetName(String streetName) {
+        this.streetName = streetName;
+    }
+
+    public void setCommunity(String community) {
+        this.community = community;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public void setZipcode(long zipcode) {
+        this.zipcode = zipcode;
+    }
+
+    public void setFamiliyMembers(ArrayList<Person> familiyMembers) {
+        this.familiyMembers = familiyMembers;
+    }
+    
+    
     
  
     

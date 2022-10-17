@@ -28,6 +28,10 @@ public class PatientPanel extends javax.swing.JPanel {
     ArrayList<Doctor> docs;
     String patCommunity = "";
     City city;
+    Community community;
+    HospitalDirectory hospDir;
+    Doctor dd;
+    Hospital hh;
     
     ArrayList<Hospital> arr_hosp;
     
@@ -35,11 +39,12 @@ public class PatientPanel extends javax.swing.JPanel {
         initComponents();  
     }
     
-    public PatientPanel(String[] communityList, PatientDirectory patDir, Hospital newHospital, City city) {
+    public PatientPanel(String[] communityList, PatientDirectory patDir, Hospital newHospital, City city, HospitalDirectory hospDir) {
         initComponents();  
         this.patDir = patDir;
         this.newHospital = newHospital;
         this.city = city;
+        this.hospDir = hospDir;
         
         doctor_community_dropbox.removeAllItems();
         
@@ -240,14 +245,16 @@ public class PatientPanel extends javax.swing.JPanel {
         System.out.println(patient_id.getText());
         System.out.println(doctor_community_dropbox.getSelectedItem().toString());
         
-        if(patient_id.getText() == null && doctor_community_dropbox.getSelectedItem().toString() == " "){
+        if(patient_id.getText().isEmpty() && doctor_community_dropbox.getSelectedItem().toString() == " "){
             JOptionPane.showMessageDialog(this, "Cannot keep both options empty");
         }
-        else if(patient_id.getText() != null && doctor_community_dropbox.getSelectedItem().toString() != " "){
+        else if(!patient_id.getText().isEmpty() && doctor_community_dropbox.getSelectedItem().toString() != " "){
+            System.out.println("patient_id.getText(): "+patient_id.getText());
+            System.out.println("doctor_community_dropbox.getSelectedItem().toString(): "+doctor_community_dropbox.getSelectedItem().toString());
             JOptionPane.showMessageDialog(this, "Please Use only one option");
         }
         else{
-            if(patient_id.getText() != null){
+            if(!patient_id.getText().isEmpty()){
             patList = patDir.getPatientList();
             for(int i=0; i<patList.size();i++){
                 System.out.println("Inside Pat Dir traversal");
@@ -295,6 +302,29 @@ public class PatientPanel extends javax.swing.JPanel {
             
           }//end if search by pid
             
+          if(doctor_community_dropbox.getSelectedItem().toString() != " "){
+              
+               String searchDoctorComm = doctor_community_dropbox.getSelectedItem().toString();
+               for(Community c: city.getCommList()){
+                   if(c.getCommName() == searchDoctorComm)
+                       community = c;
+               }
+               
+               DefaultTableModel model = (DefaultTableModel) doctor_table.getModel();
+               model.setRowCount(0);
+               
+               for(Hospital h: community.getHospitalList()){
+                   for(Doctor d : h.getDoctorHospital()){
+                       Object[] row = new Object[4];
+                        row[0] = d.getPerson().getName();
+                        row[1] = d.getId();
+                        row[2] = searchDoctorComm;
+                        row[3] = h.getHospNum();
+                        model.addRow(row);
+                   }
+               }
+          }
+            
         }
    
     }//GEN-LAST:event_searchDoctorActionPerformed
@@ -304,16 +334,24 @@ public class PatientPanel extends javax.swing.JPanel {
         int selectedRowIndex = doctor_table.getSelectedRow();
         if (selectedRowIndex<0){
             JOptionPane.showMessageDialog(this, "Please select a row to view");
-            return;
         }
+        else{
+            DefaultTableModel model = (DefaultTableModel) doctor_table.getModel();
+            long did = (long)model.getValueAt(doctor_table.getSelectedRow(), 1);
+            for(Hospital h: hospDir.getHospitalList()){
+                for(Doctor d:h.getDoctorHospital()){
+                    if(d.getId() == did){
+                        hh = h;
+                        dd = d;
+                    }
+                }
+            }
         
-        DefaultTableModel model = (DefaultTableModel) doctor_table.getModel();
-        
-        Person p =docs.get(selectedRowIndex).getPerson();
-        doctor_name.setText(p.getName());
-        doctor_id.setText(String.valueOf(docs.get(selectedRowIndex).getId()));
-        doctor_community.setText(patCommunity);
-        doctor_hospital.setText(String.valueOf(newHospital.getHospNum()));
+            doctor_id.setText(String.valueOf(dd.getId()));
+            doctor_name.setText(String.valueOf((dd.getPerson().getName())));
+            doctor_community.setText(String.valueOf(dd.getPerson().getComm()));
+            doctor_hospital.setText(String.valueOf(hh.getHospNum()));
+        }
     }//GEN-LAST:event_view_doctorActionPerformed
 
 

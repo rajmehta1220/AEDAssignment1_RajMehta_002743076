@@ -75,6 +75,10 @@ public class CommunityAdminPanel extends javax.swing.JPanel {
         update_house = new javax.swing.JTextField();
         update_house_btn = new javax.swing.JButton();
         search_comm_btn = new javax.swing.JButton();
+        delete_hospital_btn = new javax.swing.JButton();
+        delete_house_btn = new javax.swing.JButton();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
 
         jLabel1.setFont(new java.awt.Font("Zapfino", 0, 18)); // NOI18N
         jLabel1.setText("Modify the information under a Community");
@@ -116,7 +120,7 @@ public class CommunityAdminPanel extends javax.swing.JPanel {
         jLabel3.setText("Modify:");
 
         hospital_dropbox.setEditable(true);
-        hospital_dropbox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ", "hospNum", "streetName", "zipCode" }));
+        hospital_dropbox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "", "streetName", "zipCode" }));
 
         jLabel4.setText("New Value:");
 
@@ -129,11 +133,16 @@ public class CommunityAdminPanel extends javax.swing.JPanel {
 
         jLabel5.setText("Modify:");
 
-        house_dropbox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ", "houseNum", "streetName" }));
+        house_dropbox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "", "houseUnit", "streetName" }));
 
         jLabel6.setText("New Value:");
 
         update_house_btn.setText("Update House");
+        update_house_btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                update_house_btnActionPerformed(evt);
+            }
+        });
 
         search_comm_btn.setText("Search");
         search_comm_btn.addActionListener(new java.awt.event.ActionListener() {
@@ -142,6 +151,14 @@ public class CommunityAdminPanel extends javax.swing.JPanel {
             }
         });
 
+        delete_hospital_btn.setText("Delete Hospital");
+
+        delete_house_btn.setText("Delete House");
+
+        jLabel7.setText("Houses in Community:");
+
+        jLabel8.setText("Hospitals in Community:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -149,55 +166,68 @@ public class CommunityAdminPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 410, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 410, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(create_hospital_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jLabel2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(create_new_house, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addComponent(community_dropbox, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(search_comm_btn)
+                                .addGap(175, 175, 175))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addGap(128, 128, 128))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addComponent(create_hospital_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(delete_hospital_btn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 410, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 410, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(47, 47, 47)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jLabel4))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(hospital_dropbox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(update_hospital, javax.swing.GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(72, 72, 72)
-                                .addComponent(update_hospital_btn))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGap(49, 49, 49)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(47, 47, 47)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(jLabel3)
+                                            .addComponent(jLabel4))
+                                        .addGap(18, 18, 18)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(hospital_dropbox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(update_hospital, javax.swing.GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE)))
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addGap(49, 49, 49)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                             .addComponent(jLabel6)
                                             .addComponent(jLabel5))
                                         .addGap(18, 18, 18)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                             .addComponent(house_dropbox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(update_house, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)))
+                                            .addComponent(update_house, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE))))
+                                .addContainerGap(64, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addComponent(update_hospital_btn)
+                                        .addGap(98, 98, 98))
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                         .addComponent(update_house_btn)
-                                        .addGap(70, 70, 70)))))
-                        .addContainerGap(64, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                                        .addGap(97, 97, 97))))))
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jLabel2)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(create_new_house, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(community_dropbox, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(search_comm_btn)
-                                .addGap(129, 129, 129))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addGap(128, 128, 128))))))
+                                .addComponent(delete_house_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel8))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -209,7 +239,9 @@ public class CommunityAdminPanel extends javax.swing.JPanel {
                     .addComponent(community_dropbox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2)
                     .addComponent(search_comm_btn))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
@@ -223,17 +255,22 @@ public class CommunityAdminPanel extends javax.swing.JPanel {
                             .addComponent(jLabel4))
                         .addGap(18, 18, 18)
                         .addComponent(update_hospital_btn)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(create_hospital_btn)
-                    .addComponent(create_new_house))
+                    .addComponent(delete_hospital_btn))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
+                .addComponent(jLabel7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(34, 34, 34)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(54, 54, 54))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(create_new_house)
+                            .addComponent(delete_house_btn))
+                        .addGap(19, 19, 19))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel5)
                             .addComponent(house_dropbox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -319,6 +356,43 @@ public class CommunityAdminPanel extends javax.swing.JPanel {
      }
     }//GEN-LAST:event_update_hospital_btnActionPerformed
 
+    private void update_house_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_update_house_btnActionPerformed
+        // TODO add your handling code here:
+        if(house_table.getSelectedRow()<0){
+            JOptionPane.showMessageDialog(this, "Please select a House");
+        }
+        else{
+            int houseNum_check= (int)model1.getValueAt(house_table.getSelectedRow(), 0);
+            String houseupdate_str = update_house.getText();
+  
+            for(House i:community.getHouseList()){
+                if(houseNum_check == i.getHouseNum()){
+                    house = i;
+                }
+            }
+        
+        String houseUpdateCriteria = String.valueOf(house_dropbox.getSelectedItem());
+        if(houseUpdateCriteria == " "){
+            JOptionPane.showMessageDialog(this,"Select Valid Dropbox Item");
+        }
+        else{
+            if(houseUpdateCriteria == "houseNum"){
+                int new_houseNum = Integer.parseInt(houseupdate_str);
+                house.setHouseNum(new_houseNum);
+                populateHouseTable();
+            }
+            
+            if(houseUpdateCriteria == "streetName"){
+                String new_streetName = houseupdate_str;
+                house.setStreetName(new_streetName);
+                populateHouseTable();
+            }
+            
+        }
+     }
+        
+    }//GEN-LAST:event_update_house_btnActionPerformed
+
     
 public void populateHospTable(){
     for(Community c: city.getCommList()){
@@ -337,10 +411,29 @@ public void populateHospTable(){
         }
 }
 
+public void populateHouseTable(){
+    for(Community c: city.getCommList()){
+            if(selectedCommunity == c.getCommName())
+                community = c;
+        }
+        
+        model1.setRowCount(0);
+        for(House h: community.getHouseList()){
+            Object[] row = new Object[4];
+            row[0]= h.getHouseNum();
+            row[1]= h.getStreetName();
+            row[2]= h.getCity();
+            row[3]= (h.getFamiliyMembers()).size();
+            model1.addRow(row);
+        }
+}
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> community_dropbox;
     private javax.swing.JButton create_hospital_btn;
     private javax.swing.JButton create_new_house;
+    private javax.swing.JButton delete_hospital_btn;
+    private javax.swing.JButton delete_house_btn;
     private javax.swing.JComboBox<String> hospital_dropbox;
     private javax.swing.JTable hospital_table;
     private javax.swing.JComboBox<String> house_dropbox;
@@ -351,6 +444,8 @@ public void populateHospTable(){
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JButton search_comm_btn;
