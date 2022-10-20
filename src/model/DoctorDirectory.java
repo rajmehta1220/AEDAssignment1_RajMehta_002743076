@@ -22,6 +22,11 @@ public class DoctorDirectory {
         doctorList.add(newDoctor);
         return newDoctor;
     }
+    
+    public Doctor addDoctor(Doctor doctor){
+        this.getDoctorList().add(doctor);
+        return doctor;
+    }
 
     public ArrayList<Doctor> getDoctorList() {
         return doctorList;

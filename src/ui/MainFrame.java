@@ -18,11 +18,95 @@ public class MainFrame extends javax.swing.JFrame {
     PatientDirectory patDir;
     Hospital newHospital;
     HospitalDirectory hospDir;
+    PersonDirectory pd;
+    DoctorDirectory docDir;
     /**
      * Creates new form MainFrame
      */
     public MainFrame() {
         initComponents();
+        
+        ////////////////
+        String dob = "1-Jan-2021";
+        Parser parser = new Parser();
+        LocalDate date =parser.convertToDate(dob);
+        
+        pd = new PersonDirectory();
+        Person p1 = pd.createPerson(123456789, "Raj", date, "Suffolk");//doc
+        Person p2 = pd.createPerson(123432343, "Het", date, "Suffolk"); //pat
+        Person p3 = pd.createPerson(321456543, "Sneh", date, "Suffolk"); //pat
+        
+        Person p4 = pd.createPerson(543234, "Heet", date, "Sapphire");  //pat
+        Person p5 = pd.createPerson(765432345, "Varu", date, "Sapphire"); //doc
+        Person p6 = pd.createPerson(87654321, "Dhb", date, "Sapphire"); //doc
+        Person p7 = pd.createPerson(97654321, "Meet", date, "Sapphire"); //neither pat nor Doc
+        
+        patDir = new PatientDirectory();
+        patDir.createPatient(p2);
+        patDir.createPatient(p3);
+        patDir.createPatient(p4);
+        
+        System.out.println("Patients List: ");
+        ArrayList<Patient> ptt = patDir.getPatientList();
+        for(Patient i:ptt){
+            System.out.println(i.getId());
+            System.out.println(i.getPerson().getName());
+        }
+
+        city = new City("Boston");
+        Community comm_suffolk = city.newCommunity("Suffolk");
+        Community comm_sapphire = city.newCommunity("Sapphire");
+        
+        House h1 = comm_suffolk.createHouse(1,"111 Huntington Ave", "Suffolk","Boston");
+        h1.addPersonToHouse(p3);
+        h1.addPersonToHouse(p2);
+        House h2 = comm_suffolk.createHouse(2,"222 Huntington Ave", "Suffolk","Boston");
+        h2.addPersonToHouse(p1);
+       
+        House h3 = comm_sapphire.createHouse(45,"222 Sapphire Ave", "Sapphire","Boston");
+        h3.addPersonToHouse(p4);
+        h3.addPersonToHouse(p5);
+        House h4 = comm_sapphire.createHouse(56,"222 Sapphire Ave", "Sapphire","Boston");
+        h4.addPersonToHouse(p6);
+        
+        hospDir = new HospitalDirectory();
+        
+        newHospital = comm_suffolk.createHospital(1,  "112 Huntington Ave","Suffolk", "Boston");
+        hospDir.addHospital(newHospital);
+        Doctor d = new Doctor(p1);
+        newHospital.addDoctorToHospital(d);
+        newHospital = comm_sapphire.createHospital(2,  "Sapphire Ave","Sapphire", "Boston");
+        Doctor d1 = new Doctor(p6);
+        Doctor d2 = new Doctor(p5);
+        newHospital.addDoctorToHospital(d1);
+        newHospital.addDoctorToHospital(d2);
+        hospDir.addHospital(newHospital);
+        
+        docDir = new DoctorDirectory();
+        docDir.addDoctor(d);
+        docDir.addDoctor(d1);
+        docDir.addDoctor(d2);
+        
+        
+        ArrayList<Community> commList = new ArrayList<Community>();
+        commList = city.getCommList();
+        
+        int size = commList.size();
+        communityList = new String[size+1];
+        
+        commList = city.getCommList();
+        
+        communityList[0]=" ";
+        
+        for(int i=0; i<commList.size(); i++){
+            communityList[i+1]= commList.get(i).getCommName();
+        }
+
+        System.out.println("Done");
+        
+        
+        ////////////////
+        
     }
 
     /**
@@ -42,7 +126,6 @@ public class MainFrame extends javax.swing.JFrame {
         sysadmin_button = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         hospitaladmin_button = new javax.swing.JButton();
-        autofill_button = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -80,13 +163,6 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
 
-        autofill_button.setText("Autofill");
-        autofill_button.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                autofill_buttonActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -99,8 +175,7 @@ public class MainFrame extends javax.swing.JFrame {
                     .addComponent(doctor_button, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(comadmin_button, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(sysadmin_button, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(autofill_button, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -118,9 +193,7 @@ public class MainFrame extends javax.swing.JFrame {
                 .addComponent(hospitaladmin_button)
                 .addGap(18, 18, 18)
                 .addComponent(sysadmin_button)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 113, Short.MAX_VALUE)
-                .addComponent(autofill_button)
-                .addContainerGap())
+                .addContainerGap(142, Short.MAX_VALUE))
         );
 
         splitpane.setLeftComponent(jPanel1);
@@ -169,93 +242,13 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void comadmin_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comadmin_buttonActionPerformed
         // TODO add your handling code here:
-        CommunityAdminPanel commPanel = new CommunityAdminPanel(city, communityList);
+        CommunityAdministratorPanel commPanel = new CommunityAdministratorPanel(city,communityList, patDir, hospDir, pd, docDir);
         splitpane.setRightComponent(commPanel);
     }//GEN-LAST:event_comadmin_buttonActionPerformed
 
     private void hospitaladmin_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hospitaladmin_buttonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_hospitaladmin_buttonActionPerformed
-
-    private void autofill_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_autofill_buttonActionPerformed
-        // TODO add your handling code here:
-        String dob = "1-Jan-2021";
-        Parser parser = new Parser();
-        LocalDate date =parser.convertToDate(dob);
-        
-        PersonDirectory pd = new PersonDirectory();
-        Person p1 = pd.createPerson(02323232323, "Raj", date, "Suffolk");//doc
-        Person p2 = pd.createPerson(02323232323, "Het", date, "Suffolk"); //pat
-        Person p3 = pd.createPerson(02323232323, "Sneh", date, "Suffolk"); //pat
-        
-        Person p4 = pd.createPerson(02323232323, "Heet", date, "Sapphire");  //pat
-        Person p5 = pd.createPerson(02323232323, "Varu", date, "Sapphire"); //doc
-        Person p6 = pd.createPerson(02323232323, "Dhb", date, "Sapphire"); //doc
-        
-        patDir = new PatientDirectory();
-        patDir.createPatient(p2);
-        patDir.createPatient(p3);
-        patDir.createPatient(p4);
-        
-        System.out.println("Patients List: ");
-        ArrayList<Patient> ptt = patDir.getPatientList();
-        for(Patient i:ptt){
-            System.out.println(i.getId());
-            System.out.println(i.getPerson().getName());
-        }
-
-        city = new City("Boston");
-        Community comm_suffolk = city.newCommunity("Suffolk");
-        Community comm_sapphire = city.newCommunity("Sapphire");
-        
-        House h1 = comm_suffolk.createHouse(1,"111 Huntington Ave", "Suffolk","Boston");
-        h1.addPersonToHouse(p3);
-        h1.addPersonToHouse(p2);
-        House h2 = comm_suffolk.createHouse(2,"222 Huntington Ave", "Suffolk","Boston");
-        h2.addPersonToHouse(p1);
-       
-        House h3 = comm_sapphire.createHouse(45,"222 Sapphire Ave", "Sapphire","Boston");
-        h3.addPersonToHouse(p4);
-        h3.addPersonToHouse(p5);
-        House h4 = comm_sapphire.createHouse(56,"222 Sapphire Ave", "Sapphire","Boston");
-        h4.addPersonToHouse(p6);
-        
-        hospDir = new HospitalDirectory();
-        
-        newHospital = comm_suffolk.createHospital(1,  "112 Huntington Ave","Suffolk", "Boston");
-        hospDir.addHospital(newHospital);
-        Doctor d = new Doctor(p1);
-        newHospital.addDoctorToHospital(d);
-        newHospital = comm_sapphire.createHospital(2,  "Sapphire Ave","Sapphire", "Boston");
-        Doctor d1 = new Doctor(p6);
-        Doctor d2 = new Doctor(p5);
-        newHospital.addDoctorToHospital(d1);
-        newHospital.addDoctorToHospital(d2);
-        hospDir.addHospital(newHospital);
-        
-        
-        ArrayList<Community> commList = new ArrayList<Community>();
-        commList = city.getCommList();
-        
-        int size = commList.size();
-        communityList = new String[size+1];
-        
-        commList = city.getCommList();
-        
-        communityList[0]=" ";
-        
-        for(int i=0; i<commList.size(); i++){
-            communityList[i+1]= commList.get(i).getCommName();
-        }
-        
-        
-//        doctor_community_dropbox.removeAllItems();
-//        for(String s:communityList){
-//        doctor_community_dropbox.addItem(s);
-        
-        System.out.println("Done");
-        
-    }//GEN-LAST:event_autofill_buttonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -293,7 +286,6 @@ public class MainFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton autofill_button;
     private javax.swing.JButton comadmin_button;
     private javax.swing.JButton doctor_button;
     private javax.swing.JButton hospitaladmin_button;

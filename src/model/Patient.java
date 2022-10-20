@@ -16,13 +16,16 @@ public class Patient {
     private long id;
     Person person;
     static long count = 0;
+    private String userPass;
     EncounterHistory encounterHistory;
+    
     public Patient(){}
     
     public Patient(Person person){   
         count += 1;
         this.id = count;
         this.person = person;
+        this.userPass = (person.getName()).concat("123");
         
         //Create patient specific encounter history 
         this.encounterHistory = createEncounterHistory();
@@ -58,7 +61,19 @@ public class Patient {
         return this.getId() == id;
     }
     
+    public boolean matchByContact(long contact){
+        return this.person.getContactNo() == contact;
+    }
+    
     public Person getPerson() {
         return person;
+    }
+
+    public String getUserPass() {
+        return userPass;
+    }
+
+    public void setUserPass(String userPass) {
+        this.userPass = userPass;
     }
 }

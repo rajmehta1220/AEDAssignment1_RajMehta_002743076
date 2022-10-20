@@ -4,6 +4,8 @@
  */
 package ui;
 
+import javax.swing.JPanel;
+
 /**
  *
  * @author rajmehta
@@ -15,6 +17,11 @@ public class CreateNewHospital extends javax.swing.JPanel {
      */
     public CreateNewHospital() {
         initComponents();
+    }
+    
+    public static JPanel newJPanel(){
+        JPanel panel = new JPanel();
+        return panel;
     }
 
     /**
