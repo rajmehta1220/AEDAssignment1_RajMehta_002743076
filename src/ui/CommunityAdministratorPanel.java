@@ -59,10 +59,12 @@ public class CommunityAdministratorPanel extends javax.swing.JPanel {
         this.patDir = patDir;
         
         community_dropbox.removeAllItems();
-        for(String s:communityDropboxList){
-            community_dropbox.addItem(s);
+
+        for(Community c: city.getCommList()){
+            community_dropbox.addItem(c.getCommName());
         }
-        
+    
+
     model = (DefaultTableModel) hospital_table.getModel();
     model1 = (DefaultTableModel) house_table.getModel();
     
@@ -1037,31 +1039,15 @@ public class CommunityAdministratorPanel extends javax.swing.JPanel {
         DefaultTableModel model11 = (DefaultTableModel) doctor_table.getModel();
         model11.setRowCount(0);
 
-//        for (Hospital hos : community.getHospitalList()) {
-//            for(Doctor dr: hos.getDoctorHospital()){
-//            Object[] row = new Object[5];
-//            
-//            row[0] = dr.getId();
-//            row[1] = dr.getPerson().getContactNo();
-//            row[2] = dr.getPerson().getName();
-//            row[3] = dr.getPerson().getDob();
-//            row[4] = community.getCommName();
-//            model11.addRow(row);
-//
-//            }
-//        }
-        
         
             for(Doctor dr: docDir.getDoctorList()){
-            Object[] row = new Object[5];
-            
-            row[0] = dr.getId();
-            row[1] = dr.getPerson().getContactNo();
-            row[2] = dr.getPerson().getName();
-            row[3] = dr.getPerson().getDob();
-            row[4] = community.getCommName();
-            model11.addRow(row);
-
+                Object[] row = new Object[5];
+                row[0] = dr.getId();
+                row[1] = dr.getPerson().getContactNo();
+                row[2] = dr.getPerson().getName();
+                row[3] = dr.getPerson().getDob();
+                row[4] = community.getCommName();
+                model11.addRow(row);
             }
         
     }//GEN-LAST:event_populatetablesActionPerformed
