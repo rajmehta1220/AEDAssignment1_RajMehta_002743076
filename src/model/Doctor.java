@@ -12,13 +12,24 @@ public class Doctor {
     private long id;
     Person person;
     static long count = 0;
+    String docPass;
 //    EncounterHistory encounterHistory;
     
     public Doctor(Person person){   
         count += 1;
         this.id = count;
         this.person = person;
+        this.docPass = (person.getName()).concat("123");
     }
+
+    public String getDocPass() {
+        return docPass;
+    }
+
+    public void setDocPass(String docPass) {
+        this.docPass = docPass;
+    }
+   
 
     public long getId() {
         return id;

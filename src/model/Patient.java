@@ -13,12 +13,11 @@ import java.util.ArrayList;
  */
 public class Patient {
     
+    private String userPass;
     private long id;
     Person person;
     static long count = 0;
-    private String userPass;
     EncounterHistory encounterHistory;
-    
     public Patient(){}
     
     public Patient(Person person){   
@@ -26,10 +25,17 @@ public class Patient {
         this.id = count;
         this.person = person;
         this.userPass = (person.getName()).concat("123");
-        
         //Create patient specific encounter history 
         this.encounterHistory = createEncounterHistory();
         
+    }
+
+    public String getUserPass() {
+        return userPass;
+    }
+
+    public void setUserPass(String userPass) {
+        this.userPass = userPass;
     }
     
     public EncounterHistory createEncounterHistory(){
@@ -61,19 +67,11 @@ public class Patient {
         return this.getId() == id;
     }
     
-    public boolean matchByContact(long contact){
-        return this.person.getContactNo() == contact;
-    }
-    
     public Person getPerson() {
         return person;
     }
-
-    public String getUserPass() {
-        return userPass;
-    }
-
-    public void setUserPass(String userPass) {
-        this.userPass = userPass;
+    
+    public boolean matchByContact(long contact){
+        return this.person.getContactNo() == contact;
     }
 }

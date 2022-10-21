@@ -64,6 +64,13 @@ public class City {
     public void setCommList(ArrayList<Community> commList) {
         this.commList = commList;
     }
+
+    @Override
+    public String toString() {
+        return citName;
+    }
+    
+    
     
     
 }

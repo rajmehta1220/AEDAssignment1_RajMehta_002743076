@@ -23,7 +23,7 @@ import model.DoctorDirectory;
 
 /**
  *
- * @author ankitgoyal
+ * @author rajmehta
  */
 public class CommunityAdministratorPanel extends javax.swing.JPanel {
 

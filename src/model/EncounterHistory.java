@@ -8,11 +8,14 @@ import java.util.ArrayList;
 
 /**
  *
- * @author rajmehta
+ * @author goyalankit
  */
 public class EncounterHistory {
     private ArrayList<Encounter> encounterList;
     
+    public EncounterHistory(){
+        
+    }
     public EncounterHistory(Patient patient){
         this.encounterList = new ArrayList<Encounter>();
     }
@@ -26,5 +29,9 @@ public class EncounterHistory {
         Encounter newEncounter = new Encounter(vital);
         encounterList.add(newEncounter);
         return newEncounter;
+    }
+    
+    public void DeleteEncounter(Encounter encounter){
+        this.getEncounterList().remove(encounter);
     }
 }

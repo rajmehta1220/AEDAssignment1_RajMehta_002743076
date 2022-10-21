@@ -28,6 +28,10 @@ public class PersonDirectory {
         this.personList = personList;
     }
     
+    public void addPersonToDirectory(Person person){
+        personList.add(person);
+    }
+           
     public Person createPerson(long contactNo, String name, LocalDate dob, String comm){
         
         //Create person

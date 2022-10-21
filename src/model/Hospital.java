@@ -9,6 +9,7 @@ import java.util.ArrayList;
 /**
  *
  * @author rajmehta
+ * 
  */
 public class Hospital {
     private int hospNum;

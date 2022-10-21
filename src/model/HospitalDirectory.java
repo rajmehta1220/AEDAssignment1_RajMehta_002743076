@@ -17,6 +17,7 @@ public class HospitalDirectory {
         hospitalList = new ArrayList<Hospital>();
     }
 
+    
     public Hospital createHospital(int hospNum,String streetName, String community,String city){
         Hospital newHospital = new Hospital(hospNum, streetName, community, city);
         hospitalList.add(newHospital);

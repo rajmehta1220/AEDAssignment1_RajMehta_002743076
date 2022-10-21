@@ -17,15 +17,14 @@ public class DoctorDirectory {
         doctorList = new ArrayList<Doctor>();
     }
     
+    public void addDoctor(Doctor doctor){
+        doctorList.add(doctor);
+    }
+    
     public Doctor createDoctor(Person person){
         Doctor newDoctor = new Doctor(person);
         doctorList.add(newDoctor);
         return newDoctor;
-    }
-    
-    public Doctor addDoctor(Doctor doctor){
-        this.getDoctorList().add(doctor);
-        return doctor;
     }
 
     public ArrayList<Doctor> getDoctorList() {

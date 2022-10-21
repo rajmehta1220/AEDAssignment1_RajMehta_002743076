@@ -21,7 +21,9 @@ public class House {
     private long zipcode;
     ArrayList<Person> familiyMembers;
     
-    public House(int houseNum,String streetName, String community,String city){
+    public House(int houseNum,String streetName,
+                 String community,String city
+                    ){
         
         this.houseNum = houseNum;      
         this.streetName = streetName;

@@ -5,7 +5,20 @@
 package ui;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import model.*;
+import model.City;
+import model.Community;
+import model.Doctor;
+import model.DoctorDirectory;
+import model.EncounterHistory;
+import model.Hospital;
+import model.HospitalDirectory;
+import model.House;
+import model.MainSystem;
+import model.Patient;
+import model.PatientDirectory;
+import model.Person;
+import model.PersonDirectory;
+
 import parser.Parser;
 /**
  *
@@ -18,30 +31,40 @@ public class MainFrame extends javax.swing.JFrame {
     PatientDirectory patDir;
     Hospital newHospital;
     HospitalDirectory hospDir;
+    EncounterHistory encounterDir;
     PersonDirectory pd;
     DoctorDirectory docDir;
+    MainSystem sys;
+    
     /**
      * Creates new form MainFrame
      */
     public MainFrame() {
         initComponents();
-        
-        ////////////////
-        String dob = "1-Jan-2021";
-        Parser parser = new Parser();
-        LocalDate date =parser.convertToDate(dob);
-        
-        pd = new PersonDirectory();
-        Person p1 = pd.createPerson(123456789, "Raj", date, "Suffolk");//doc
-        Person p2 = pd.createPerson(123432343, "Het", date, "Suffolk"); //pat
-        Person p3 = pd.createPerson(321456543, "Sneh", date, "Suffolk"); //pat
-        
-        Person p4 = pd.createPerson(543234, "Heet", date, "Sapphire");  //pat
-        Person p5 = pd.createPerson(765432345, "Varu", date, "Sapphire"); //doc
-        Person p6 = pd.createPerson(87654321, "Dhb", date, "Sapphire"); //doc
-        Person p7 = pd.createPerson(97654321, "Meet", date, "Sapphire"); //neither pat nor Doc
-        
+        setSize(1200,800);
+        hospDir = new HospitalDirectory();
         patDir = new PatientDirectory();
+        encounterDir = new EncounterHistory();
+        pd = new PersonDirectory();
+        docDir = new DoctorDirectory();
+        sys = new MainSystem();
+        
+        
+        String dob = "20-Dec-2000";
+        Parser parser = new Parser();
+        LocalDate date = parser.convertToDate(dob);
+        
+        
+        Person p1 = pd.createPerson(02323232323, "Raj", date, "Suffolk");//doc
+        Person p2 = pd.createPerson(12345, "Het", date, "Suffolk"); //pat
+        Person p3 = pd.createPerson(0232, "Sneh", date, "Suffolk"); //pat
+        
+        Person p4 = pd.createPerson(02323543, "Heet", date, "Sapphire");  //pat
+        Person p5 = pd.createPerson(027563334, "Varu", date, "Sapphire"); //doc
+        Person p6 = pd.createPerson(1234323, "Dhb", date, "Sapphire"); //doc
+        Person p7 = pd.createPerson(12343234, "Sanvi", date, "Sapphire"); //Not Doc nor Pat
+        
+        
         patDir.createPatient(p2);
         patDir.createPatient(p3);
         patDir.createPatient(p4);
@@ -54,6 +77,7 @@ public class MainFrame extends javax.swing.JFrame {
         }
 
         city = new City("Boston");
+        sys.getCityList().add(city);
         Community comm_suffolk = city.newCommunity("Suffolk");
         Community comm_sapphire = city.newCommunity("Sapphire");
         
@@ -68,9 +92,7 @@ public class MainFrame extends javax.swing.JFrame {
         h3.addPersonToHouse(p5);
         House h4 = comm_sapphire.createHouse(56,"222 Sapphire Ave", "Sapphire","Boston");
         h4.addPersonToHouse(p6);
-        
-        hospDir = new HospitalDirectory();
-        
+               
         newHospital = comm_suffolk.createHospital(1,  "112 Huntington Ave","Suffolk", "Boston");
         hospDir.addHospital(newHospital);
         Doctor d = new Doctor(p1);
@@ -87,7 +109,6 @@ public class MainFrame extends javax.swing.JFrame {
         docDir.addDoctor(d1);
         docDir.addDoctor(d2);
         
-        
         ArrayList<Community> commList = new ArrayList<Community>();
         commList = city.getCommList();
         
@@ -101,12 +122,9 @@ public class MainFrame extends javax.swing.JFrame {
         for(int i=0; i<commList.size(); i++){
             communityList[i+1]= commList.get(i).getCommName();
         }
-
+        
+        
         System.out.println("Done");
-        
-        
-        ////////////////
-        
     }
 
     /**
@@ -152,6 +170,11 @@ public class MainFrame extends javax.swing.JFrame {
         });
 
         sysadmin_button.setText("Sys - Admin");
+        sysadmin_button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sysadmin_buttonActionPerformed(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Helvetica Neue", 0, 15)); // NOI18N
         jLabel1.setText("Select a profile:");
@@ -193,7 +216,7 @@ public class MainFrame extends javax.swing.JFrame {
                 .addComponent(hospitaladmin_button)
                 .addGap(18, 18, 18)
                 .addComponent(sysadmin_button)
-                .addContainerGap(142, Short.MAX_VALUE))
+                .addContainerGap(148, Short.MAX_VALUE))
         );
 
         splitpane.setLeftComponent(jPanel1);
@@ -235,20 +258,33 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void doctor_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_doctor_buttonActionPerformed
         // TODO add your handling code here:
-        DoctorPanel doctorpanel = new DoctorPanel(patDir);
+        DoctorPanel doctorpanel = new DoctorPanel(patDir,docDir);
         splitpane.setRightComponent(doctorpanel);
 
     }//GEN-LAST:event_doctor_buttonActionPerformed
 
     private void comadmin_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comadmin_buttonActionPerformed
         // TODO add your handling code here:
-        CommunityAdministratorPanel commPanel = new CommunityAdministratorPanel(city,communityList, patDir, hospDir, pd, docDir);
+//        CommunityAdminPanel commPanel = new CommunityAdminPanel(city, communityList);
+//        splitpane.setRightComponent(commPanel);
+        
+        CommunityAdministratorPanel commPanel = new CommunityAdministratorPanel(city, communityList, patDir, hospDir,pd, docDir);
         splitpane.setRightComponent(commPanel);
     }//GEN-LAST:event_comadmin_buttonActionPerformed
 
     private void hospitaladmin_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hospitaladmin_buttonActionPerformed
         // TODO add your handling code here:
+        HospitalAdministratorPanel hospPanel = new HospitalAdministratorPanel(communityList, patDir, newHospital, city, hospDir);
+        splitpane.setRightComponent(hospPanel);
+        
     }//GEN-LAST:event_hospitaladmin_buttonActionPerformed
+
+    private void sysadmin_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sysadmin_buttonActionPerformed
+        // TODO add your handling code here:
+        SystemAdminPanel newSystemPanel = new SystemAdminPanel(city, communityList, patDir, hospDir,pd, docDir,sys);
+        splitpane.setRightComponent(newSystemPanel);
+        splitpane.setDividerLocation(150);
+    }//GEN-LAST:event_sysadmin_buttonActionPerformed
 
     /**
      * @param args the command line arguments

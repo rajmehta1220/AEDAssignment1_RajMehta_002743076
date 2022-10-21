@@ -28,7 +28,23 @@ public class Person {
         this.contactNo = contactNo;
         this.age = calculateAge(dob);
         this.dob = dob;
-        this.comm = comm;
+        this.comm = comm;       
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public void setDob(LocalDate dob) {
+        this.dob = dob;
+    }
+
+    public void setContactNo(long contactNo) {
+        this.contactNo = contactNo;
     }
 
         
@@ -64,6 +80,7 @@ public class Person {
     public void setComm(String comm) {
         this.comm = comm;
     }
+    
 
     @Override
     public String toString() {
