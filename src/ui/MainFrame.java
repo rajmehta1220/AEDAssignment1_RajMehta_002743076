@@ -276,7 +276,7 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void hospitaladmin_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hospitaladmin_buttonActionPerformed
         // TODO add your handling code here:
-        HospitalAdministratorPanel hospPanel = new HospitalAdministratorPanel(communityList, patDir, newHospital, city, hospDir);
+        HospitalAdministratorPanel hospPanel = new HospitalAdministratorPanel(communityList, patDir, newHospital, city, hospDir, docDir, pd);
         splitpane.setRightComponent(hospPanel);
         
     }//GEN-LAST:event_hospitaladmin_buttonActionPerformed
