@@ -44,7 +44,7 @@ public class Parser {
         try{
             dt = LocalDate.parse(date, formatter);
         }catch(Exception e){
-            dt = LocalDate.parse("1-Jan-1990", formatter);
+            dt = LocalDate.parse("20-Dec-2000", formatter);
         }
          
         return dt;
