@@ -170,20 +170,22 @@
                               <Component id="jLabel12" alignment="0" pref="99" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="hospNum" alignment="0" min="-2" pref="122" max="-2" attributes="0"/>
-                              <Component id="zipcodeTextField" alignment="0" min="-2" pref="122" max="-2" attributes="0"/>
-                              <Component id="streetName" alignment="0" min="-2" pref="122" max="-2" attributes="0"/>
-                              <Component id="communityTextField" alignment="0" min="-2" pref="122" max="-2" attributes="0"/>
-                              <Component id="cityJTextField" alignment="0" min="-2" pref="122" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="hospNum" alignment="0" pref="122" max="32767" attributes="0"/>
+                              <Component id="zipcodeTextField" alignment="0" pref="122" max="32767" attributes="0"/>
+                              <Component id="streetName" alignment="0" pref="122" max="32767" attributes="0"/>
+                              <Component id="communityTextField" alignment="0" max="32767" attributes="0"/>
+                              <Component id="cityJTextField" alignment="0" max="32767" attributes="0"/>
                           </Group>
+                          <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
+                          <Component id="selectCity" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="149" max="-2" attributes="0"/>
                           <Component id="saveHospDetails" min="-2" pref="160" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace pref="657" max="32767" attributes="0"/>
+                  <EmptySpace pref="555" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -209,6 +211,7 @@
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel11" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="cityJTextField" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="selectCity" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
@@ -226,14 +229,6 @@
         <Component class="javax.swing.JTextField" name="zipcodeTextField">
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="zipcodeTextFieldActionPerformed"/>
-          </Events>
-        </Component>
-        <Component class="javax.swing.JTextField" name="communityTextField">
-          <Properties>
-            <Property name="editable" type="boolean" value="false"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="communityTextFieldActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="streetName">
@@ -271,20 +266,50 @@
             <Property name="text" type="java.lang.String" value="HosNum"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="cityJTextField">
-          <Properties>
-            <Property name="editable" type="boolean" value="false"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cityJTextFieldActionPerformed"/>
-          </Events>
-        </Component>
         <Component class="javax.swing.JButton" name="saveHospDetails">
           <Properties>
             <Property name="text" type="java.lang.String" value="Save"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="saveHospDetailsActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JComboBox" name="communityTextField">
+          <Properties>
+            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+              <StringArray count="4">
+                <StringItem index="0" value="Item 1"/>
+                <StringItem index="1" value="Item 2"/>
+                <StringItem index="2" value="Item 3"/>
+                <StringItem index="3" value="Item 4"/>
+              </StringArray>
+            </Property>
+          </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+          </AuxValues>
+        </Component>
+        <Component class="javax.swing.JComboBox" name="cityJTextField">
+          <Properties>
+            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+              <StringArray count="4">
+                <StringItem index="0" value="Item 1"/>
+                <StringItem index="1" value="Item 2"/>
+                <StringItem index="2" value="Item 3"/>
+                <StringItem index="3" value="Item 4"/>
+              </StringArray>
+            </Property>
+          </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+          </AuxValues>
+        </Component>
+        <Component class="javax.swing.JButton" name="selectCity">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Select City"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="selectCityActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>

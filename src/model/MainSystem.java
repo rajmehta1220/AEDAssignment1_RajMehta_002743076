@@ -13,6 +13,10 @@ import java.util.ArrayList;
 public class MainSystem {
     
     private ArrayList<City> cityList;
+    private HospitalDirectory hospDir;
+    private PatientDirectory patDir;
+    private PersonDirectory perDir;
+    
 
     public MainSystem() {
         this.cityList = new ArrayList<City>();
@@ -36,6 +40,48 @@ public class MainSystem {
     public void removeCity(City city){
         cityList.remove(city);
     }
+    
+    public void addNewCity(City city){
+        this.getCityList().add(city);
+    }
+    
+    public void PatDirectory(PatientDirectory pd){
+        this.patDir = pd;
+    }
+    
+    public void HosDirectory(HospitalDirectory hd){
+        this.hospDir = hd;
+    }
+    
+    public void PerDirectory(PersonDirectory perd){
+        this.perDir = perd;
+    }
+
+    public HospitalDirectory getHospDir() {
+        return hospDir;
+    }
+
+    public void setHospDir(HospitalDirectory hospDir) {
+        this.hospDir = hospDir;
+    }
+
+    public PatientDirectory getPatDir() {
+        return patDir;
+    }
+
+    public void setPatDir(PatientDirectory patDir) {
+        this.patDir = patDir;
+    }
+
+    public PersonDirectory getPerDir() {
+        return perDir;
+    }
+
+    public void setPerDir(PersonDirectory perDir) {
+        this.perDir = perDir;
+    }
+    
+    
     
     
 }

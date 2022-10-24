@@ -25,7 +25,7 @@ import parser.Parser;
  * @author rajmehta
  */
 public class MainFrame extends javax.swing.JFrame {
-
+    MainSystem system;
     City city;
     String[] communityList;
     PatientDirectory patDir;
@@ -55,7 +55,7 @@ public class MainFrame extends javax.swing.JFrame {
         LocalDate date = parser.convertToDate(dob);
         
         
-        
+        system = new MainSystem();
         
         Person p1 = pd.createPerson(02323232323, "Raj", date, "Suffolk");//doc
         Person p2 = pd.createPerson(12345, "Het", date, "Suffolk"); //pat
@@ -80,6 +80,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         city = new City("Boston");
         sys.getCityList().add(city);
+        system.addNewCity(city);
         Community comm_suffolk = city.newCommunity("Suffolk");
         Community comm_sapphire = city.newCommunity("Sapphire");
         
@@ -105,11 +106,15 @@ public class MainFrame extends javax.swing.JFrame {
         newHospital.addDoctorToHospital(d1);
         newHospital.addDoctorToHospital(d2);
         hospDir.addHospital(newHospital);
+        system.HosDirectory(hospDir);
         
         docDir = new DoctorDirectory();
         docDir.addDoctor(d);
         docDir.addDoctor(d1);
         docDir.addDoctor(d2);
+        
+        system.PatDirectory(patDir);
+        system.PerDirectory(pd);
         
         ArrayList<Community> commList = new ArrayList<Community>();
         commList = city.getCommList();
@@ -124,7 +129,6 @@ public class MainFrame extends javax.swing.JFrame {
         for(int i=0; i<commList.size(); i++){
             communityList[i+1]= commList.get(i).getCommName();
         }
-        
         
         System.out.println("Done");
     }
@@ -276,7 +280,7 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void hospitaladmin_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hospitaladmin_buttonActionPerformed
         // TODO add your handling code here:
-        HospitalAdministratorPanel hospPanel = new HospitalAdministratorPanel(communityList, patDir, newHospital, city, hospDir, docDir, pd);
+        HospitalAdministratorPanel hospPanel = new HospitalAdministratorPanel(system, communityList, patDir, newHospital, city, hospDir, docDir, pd);
         splitpane.setRightComponent(hospPanel);
         
     }//GEN-LAST:event_hospitaladmin_buttonActionPerformed

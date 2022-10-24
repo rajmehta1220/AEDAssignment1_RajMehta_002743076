@@ -40,11 +40,14 @@ public class HospitalAdministratorPanel extends javax.swing.JPanel {
     Person selectedPerson;
     DefaultTableModel model12;
     Doctor update_doc_obj;
+    MainSystem system;
+    Community create_hosp;
+    City create_hosp_comm;
     
     /**
      * Creates new form HospitalAdminstratorPanel
      */
-    public HospitalAdministratorPanel(String[] communityList, PatientDirectory patDir, Hospital newHospital, City city, HospitalDirectory hospDir, DoctorDirectory doctorDir, PersonDirectory pd) {
+    public HospitalAdministratorPanel(MainSystem system ,String[] communityList, PatientDirectory patDir, Hospital newHospital, City city, HospitalDirectory hospDir, DoctorDirectory doctorDir, PersonDirectory pd) {
         initComponents();
         this.patDir = patDir;
         this.newHospital = newHospital;
@@ -52,11 +55,22 @@ public class HospitalAdministratorPanel extends javax.swing.JPanel {
         this.hospDir = hospDir;
         this.docDir = doctorDir;
         this.pd = pd;
+        this.system = system;
         
         model = (DefaultTableModel) hospital_table.getModel();
         hospital_landingPage.setVisible(true);
         
         populateHospTable();
+        
+        cityJTextField.removeAllItems();
+        for(City c:system.getCityList()){
+            cityJTextField.addItem(c.getCitName());
+        }
+        
+        hopital_list.removeAllItems();
+        for(Hospital h : hospDir.getHospitalList()){
+            hopital_list.addItem(String.valueOf(h.getHospNum()));
+        }
     }
 
     /**
@@ -78,7 +92,6 @@ public class HospitalAdministratorPanel extends javax.swing.JPanel {
         manageDoctorsButton = new javax.swing.JButton();
         hospitalJPanel = new javax.swing.JPanel();
         zipcodeTextField = new javax.swing.JTextField();
-        communityTextField = new javax.swing.JTextField();
         streetName = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
@@ -86,8 +99,10 @@ public class HospitalAdministratorPanel extends javax.swing.JPanel {
         jLabel12 = new javax.swing.JLabel();
         hospNum = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
-        cityJTextField = new javax.swing.JTextField();
         saveHospDetails = new javax.swing.JButton();
+        communityTextField = new javax.swing.JComboBox<>();
+        cityJTextField = new javax.swing.JComboBox<>();
+        selectCity = new javax.swing.JButton();
         manageDoctorsPanel = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         doctor_table = new javax.swing.JTable();
@@ -197,13 +212,6 @@ public class HospitalAdministratorPanel extends javax.swing.JPanel {
             }
         });
 
-        communityTextField.setEditable(false);
-        communityTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                communityTextFieldActionPerformed(evt);
-            }
-        });
-
         streetName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 streetNameActionPerformed(evt);
@@ -226,17 +234,21 @@ public class HospitalAdministratorPanel extends javax.swing.JPanel {
 
         jLabel13.setText("HosNum");
 
-        cityJTextField.setEditable(false);
-        cityJTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cityJTextFieldActionPerformed(evt);
-            }
-        });
-
         saveHospDetails.setText("Save");
         saveHospDetails.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 saveHospDetailsActionPerformed(evt);
+            }
+        });
+
+        communityTextField.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        cityJTextField.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        selectCity.setText("Select City");
+        selectCity.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                selectCityActionPerformed(evt);
             }
         });
 
@@ -255,16 +267,18 @@ public class HospitalAdministratorPanel extends javax.swing.JPanel {
                             .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, 99, Short.MAX_VALUE)
                             .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, 99, Short.MAX_VALUE))
                         .addGap(18, 18, 18)
-                        .addGroup(hospitalJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(hospNum, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(zipcodeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(streetName, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(communityTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cityJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(hospitalJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(hospNum, javax.swing.GroupLayout.DEFAULT_SIZE, 122, Short.MAX_VALUE)
+                            .addComponent(zipcodeTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 122, Short.MAX_VALUE)
+                            .addComponent(streetName, javax.swing.GroupLayout.DEFAULT_SIZE, 122, Short.MAX_VALUE)
+                            .addComponent(communityTextField, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cityJTextField, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(38, 38, 38)
+                        .addComponent(selectCity))
                     .addGroup(hospitalJPanelLayout.createSequentialGroup()
                         .addGap(149, 149, 149)
                         .addComponent(saveHospDetails, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(657, Short.MAX_VALUE))
+                .addContainerGap(555, Short.MAX_VALUE))
         );
         hospitalJPanelLayout.setVerticalGroup(
             hospitalJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -284,7 +298,8 @@ public class HospitalAdministratorPanel extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addGroup(hospitalJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11)
-                    .addComponent(cityJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cityJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(selectCity))
                 .addGap(27, 27, 27)
                 .addGroup(hospitalJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel12)
@@ -502,10 +517,6 @@ public class HospitalAdministratorPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_zipcodeTextFieldActionPerformed
 
-    private void communityTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_communityTextFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_communityTextFieldActionPerformed
-
     private void streetNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_streetNameActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_streetNameActionPerformed
@@ -514,16 +525,12 @@ public class HospitalAdministratorPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_hospNumActionPerformed
 
-    private void cityJTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cityJTextFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cityJTextFieldActionPerformed
-
     private void saveHospDetailsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveHospDetailsActionPerformed
         // TODO add your handling code here:
         boolean true_hospNum = false;
         int HospNum1 = Integer.parseInt(hospNum.getText());
 
-        for (Hospital h:community.getHospitalList()){
+        for (Hospital h:hospDir.getHospitalList()){
             if(h.getHospNum() == HospNum1){
                 JOptionPane.showMessageDialog(this,"This Hospital Already Exist");
                 true_hospNum = true;
@@ -531,20 +538,28 @@ public class HospitalAdministratorPanel extends javax.swing.JPanel {
         }
 
         if(!true_hospNum){
-            String city1 = cityJTextField.getText();
+            String city1 = String.valueOf(cityJTextField.getSelectedItem());
             String streetName1 = streetName.getText();
-            String community1 = communityTextField.getText();
+            String community1 = String.valueOf(communityTextField.getSelectedItem());
             Long Zipcode1 =Long.parseLong(zipcodeTextField.getText());
-            hospitalDirectory = new HospitalDirectory();
-            hospitalDirectory.createHospital(HospNum1,streetName1,community1,city1);
-            community.createHospital(HospNum1,streetName1,community1,city1);
+            
+            for(City c: system.getCityList()){
+                if(c.getCitName() == city1){
+                    for(Community comm: c.getCommList()){
+                        if(comm.getCommName() == community1){
+                            create_hosp = comm;
+                        }
+                    }
+                }
+            }
+            
+            hospDir.createHospital(HospNum1,streetName1,community1,city1);
+            create_hosp.createHospital(HospNum1,streetName1,community1,city1);
             populateHospTable();
             JOptionPane.showMessageDialog(this,"New Hospital Created with Id: "+HospNum1);
 
             hospNum.setText("");
-            cityJTextField.setText("");
             streetName.setText("");
-            communityTextField.setText("");
             zipcodeTextField.setText("");
         }
         //        Community cc = city.getCommList();
@@ -568,7 +583,7 @@ public class HospitalAdministratorPanel extends javax.swing.JPanel {
                 }
             }
 
-            for(Hospital h : hospitalDirectory.getHospitalList()){
+            for(Hospital h : hospDir.getHospitalList()){
                 if(Integer.parseInt((String)hopital_list.getSelectedItem()) == h.getHospNum()){
                     selectedHospital = h;
                 }
@@ -583,30 +598,15 @@ public class HospitalAdministratorPanel extends javax.swing.JPanel {
             }
 
             if(!should_doc){
-                selectedHospital.addDoctorToHospital(new Doctor(selectedPerson));
+                Doctor new_doc = new Doctor(selectedPerson);
+                selectedHospital.addDoctorToHospital(new_doc);
+                docDir.addDoctor(new_doc);
                 JOptionPane.showMessageDialog(this, "Added "+selectedPerson.getName()+ " to Hospital");
                 should_doc = false;
-
+                PopulateManageDoctorTable();
             }
 
         }//end else
-
-        //            for (Hospital hos : community.getHospitalList()) {
-            //
-            //                hos.getDoctorHospital().add(dr);
-            ////            for(Doctor dr: hos.getDoctorHospital()){
-                ////
-                ////            }
-            //        }
-        ////            int hospNum_check= (int)model.getValueAt(hospital_table.getSelectedRow(), 0);
-        //            String hospupdate_str = update_hospital.getText();
-        //
-        //            for(Hospital i:community.getHospitalList()){
-            //                if(hospNum_check == i.getHospNum()){
-                //                    hospital = i;
-                //                }
-            //            }
-
     }//GEN-LAST:event_add_doctorBtnActionPerformed
 
     private void populatetablesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_populatetablesActionPerformed
@@ -700,6 +700,23 @@ public class HospitalAdministratorPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void selectCityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectCityActionPerformed
+        // TODO add your handling code here:
+        String city_fetch_comm = String.valueOf(cityJTextField.getSelectedItem());
+        communityTextField.removeAllItems();
+        
+        for (City c: system.getCityList()){
+            System.out.println("City is: "+city_fetch_comm);
+            System.out.println("City DB is: "+c.getCitName());
+            if(city_fetch_comm == c.getCitName()){
+                for(Community comm: c.getCommList()){
+                    System.out.println("Comm is: "+comm.getCommName());
+                    communityTextField.addItem(comm.getCommName());
+                }
+            }
+        }
+    }//GEN-LAST:event_selectCityActionPerformed
+
     public void populateHospTable(){
         model.setRowCount(0);
         for(Community c: city.getCommList()){
@@ -717,8 +734,8 @@ public class HospitalAdministratorPanel extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton add_doctorBtn;
-    private javax.swing.JTextField cityJTextField;
-    private javax.swing.JTextField communityTextField;
+    private javax.swing.JComboBox<String> cityJTextField;
+    private javax.swing.JComboBox<String> communityTextField;
     private javax.swing.JButton create_hospital_btn;
     private javax.swing.JTextField doctor_birthdate;
     private javax.swing.JTextField doctor_cellno;
@@ -749,6 +766,7 @@ public class HospitalAdministratorPanel extends javax.swing.JPanel {
     private javax.swing.JButton populatetables;
     private javax.swing.JButton saveHospDetails;
     private javax.swing.JButton save_updateddoctor;
+    private javax.swing.JButton selectCity;
     private javax.swing.JTextField streetName;
     private javax.swing.JTextField update_hospital;
     private javax.swing.JButton update_hospital_btn;
