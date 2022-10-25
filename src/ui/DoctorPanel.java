@@ -27,6 +27,8 @@ public class DoctorPanel extends javax.swing.JPanel {
     Patient patient1;
     Parser parser;
     boolean logged_in = false;
+    Doctor d_pat;
+    long patient_id_check;
     
     /** Creates new form DotorPanel */
     public DoctorPanel() {
@@ -38,23 +40,7 @@ public class DoctorPanel extends javax.swing.JPanel {
         
         this.patDir = patDir;
         patientList = patDir.getPatientList();
-        this.docDir = docDir;
-        
-        model = (DefaultTableModel) person_dir_table.getModel();
-        model.setRowCount(0);
-        
-        model1 = (DefaultTableModel) person_directory_table.getModel();
-        model1.setRowCount(0);
-                    
-        for(Patient p:patientList){
-            Object[] row= new Object[3];
-            row[0]= p.getId();
-            row[1]= p.getPerson().getName();
-            row[2]= p.getPerson().getAge();
-            model.addRow(row);
-            model1.addRow(row);
-        }
-        
+        this.docDir = docDir;  
     }
     /** This method is called from within the constructor to
      * initialize the form.
@@ -86,6 +72,7 @@ public class DoctorPanel extends javax.swing.JPanel {
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
+        login_doctor = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         person_directory_table = new javax.swing.JTable();
@@ -138,6 +125,13 @@ public class DoctorPanel extends javax.swing.JPanel {
         jLabel8.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         jLabel8.setText("Enter Doctor Creds:");
 
+        login_doctor.setText("Login");
+        login_doctor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                login_doctorActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -146,6 +140,9 @@ public class DoctorPanel extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 444, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
                             .addComponent(jLabel3))
@@ -153,10 +150,9 @@ public class DoctorPanel extends javax.swing.JPanel {
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(blood_pressure)
                             .addComponent(heart_rate, javax.swing.GroupLayout.DEFAULT_SIZE, 154, Short.MAX_VALUE))
-                        .addGap(0, 445, Short.MAX_VALUE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 444, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel8)
+                        .addGap(91, 91, 91))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
@@ -167,20 +163,23 @@ public class DoctorPanel extends javax.swing.JPanel {
                                 .addComponent(jLabel4)
                                 .addGap(61, 61, 61)
                                 .addComponent(weight_ui, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(46, 46, 46)
-                        .addComponent(add_vitals_button, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(46, 46, 46)
+                                .addComponent(add_vitals_button, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 77, Short.MAX_VALUE)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel7)
                                     .addComponent(jLabel6))
                                 .addGap(18, 18, 18)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(doc_pass, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(doc_id, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(jLabel8))
-                        .addGap(64, 64, 64))))
+                                    .addComponent(doc_id, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(64, 64, 64))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(login_doctor)
+                                .addGap(99, 99, 99))))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -195,9 +194,9 @@ public class DoctorPanel extends javax.swing.JPanel {
                         .addContainerGap()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(37, 37, 37)
                                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                             .addComponent(jLabel1)
@@ -205,31 +204,34 @@ public class DoctorPanel extends javax.swing.JPanel {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(jLabel3))
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                        .addGap(0, 0, Short.MAX_VALUE)
-                                        .addComponent(heart_rate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLabel4))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jLabel8)
+                                        .addGap(14, 14, 14))))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(jLabel8)))
-                        .addGap(6, 6, 6)))
+                                .addComponent(heart_rate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel6)
+                                .addComponent(doc_id, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(3, 3, 3)))
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel2Layout.createSequentialGroup()
+                            .addGap(29, 29, 29)
+                            .addComponent(jLabel5))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                            .addGap(12, 12, 12)
+                            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel2Layout.createSequentialGroup()
+                            .addComponent(jLabel7)
+                            .addGap(8, 8, 8)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(29, 29, 29)
-                        .addComponent(jLabel5))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addGap(12, 12, 12)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel6)
-                                    .addComponent(doc_id, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel7)
-                                    .addComponent(doc_pass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(8, 8, 8))
-                            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(doc_pass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(login_doctor)))
                 .addGap(28, 28, 28))
         );
 
@@ -325,31 +327,18 @@ public class DoctorPanel extends javax.swing.JPanel {
 
     private void add_vitals_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_add_vitals_buttonActionPerformed
         // TODO add your handling code here:
-        
-        long docid_cred = Long.parseLong(doc_id.getText());
-        String docpass_cred = String.valueOf(doc_pass.getText());
-   
-        for(Doctor d: docDir.getDoctorList()){
-            
-            System.out.println("Given: "+docpass_cred+ " Obj: "+d.getDocPass());
-            System.out.println("GivenId: "+docid_cred+ " ObjID: "+d.getId());
-            if(d.getId() == docid_cred && (d.getDocPass() == null ? docpass_cred == null : d.getDocPass().equals(docpass_cred))){
-                System.out.print("Validation Matched");
-                logged_in =true;
-            }
-        }
-     
+      
         if(logged_in){
             if(person_dir_table.getSelectedRow()<0){
                 JOptionPane.showMessageDialog(this, "Please select a Patient");
             }
             else{
-                long patient_id_check= (long)model.getValueAt(person_dir_table.getSelectedRow(), 0);
+                patient_id_check= (long)model.getValueAt(person_dir_table.getSelectedRow(), 0);
                 System.out.println("Patient ID Check: "+patient_id_check);
-
-                for(Patient i:patientList){
-                    if(patient_id_check == i.getId()){
-                        patient = i;
+           
+                for(Patient p : d_pat.getPatientsAssignToDoctor()){
+                    if(patient_id_check == p.getId()){
+                        patient = p;
                     }
                 }
                 float bloodPressure = Float.parseFloat(blood_pressure.getText());
@@ -402,6 +391,45 @@ public class DoctorPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_doc_idActionPerformed
 
+    private void login_doctorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_login_doctorActionPerformed
+        // TODO add your handling code here:
+        long docid_cred = Long.parseLong(doc_id.getText());
+        String docpass_cred = String.valueOf(doc_pass.getText());
+        
+        for(Doctor d: docDir.getDoctorList()){
+            
+            System.out.println("Given: "+docpass_cred+ " Obj: "+d.getDocPass());
+            System.out.println("GivenId: "+docid_cred+ " ObjID: "+d.getId());
+            if(d.getId() == docid_cred && (d.getDocPass() == null ? docpass_cred == null : d.getDocPass().equals(docpass_cred))){
+                System.out.print("Validation Matched");
+                d_pat = d;
+                logged_in =true;  
+            }
+        }
+        
+        for(Patient p : d_pat.getPatientsAssignToDoctor()){
+                if(patient_id_check == p.getId()){
+                    patient = p;
+            }
+         }
+
+        model = (DefaultTableModel) person_dir_table.getModel();
+        model.setRowCount(0);
+        
+        model1 = (DefaultTableModel) person_directory_table.getModel();
+        model1.setRowCount(0);
+                    
+        for(Patient p:d_pat.getPatientsAssignToDoctor()){
+            Object[] row= new Object[3];
+            row[0]= p.getId();
+            row[1]= p.getPerson().getName();
+            row[2]= p.getPerson().getAge();
+            model.addRow(row);
+            model1.addRow(row);
+        }
+        
+    }//GEN-LAST:event_login_doctorActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton add_vitals_button;
@@ -425,6 +453,7 @@ public class DoctorPanel extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JButton login_doctor;
     private javax.swing.JTable person_dir_table;
     private javax.swing.JTable person_directory_table;
     private javax.swing.JTextArea symptoms_ui;

@@ -4,6 +4,8 @@
  */
 package model;
 
+import java.util.*;
+
 /**
  *
  * @author rajmehta
@@ -13,13 +15,14 @@ public class Doctor {
     Person person;
     static long count = 0;
     String docPass;
-//    EncounterHistory encounterHistory;
+    ArrayList<Patient> patientsAssignToDoctor;
     
     public Doctor(Person person){   
         count += 1;
         this.id = count;
         this.person = person;
         this.docPass = (person.getName()).concat("123");
+        this.patientsAssignToDoctor = new ArrayList<Patient>();
     }
 
     public String getDocPass() {
@@ -64,6 +67,17 @@ public class Doctor {
         
         return this.getId() == id;
     }
+
+    public ArrayList<Patient> getPatientsAssignToDoctor() {
+        return patientsAssignToDoctor;
+    }
+
+    public void setPatientsAssignToDoctor(ArrayList<Patient> patientsAssignToDoctor) {
+        this.patientsAssignToDoctor = patientsAssignToDoctor;
+    }
     
-    
+    public void BookPatientAppointnent(Patient p){
+        this.getPatientsAssignToDoctor().add(p);
+        System.out.println("Added Patient "+p.getPerson().getName()+ " to Doctor "+this.getId());
+    }
 }

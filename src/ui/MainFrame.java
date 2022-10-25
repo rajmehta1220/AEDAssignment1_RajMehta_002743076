@@ -98,18 +98,23 @@ public class MainFrame extends javax.swing.JFrame {
                
         newHospital = comm_suffolk.createHospital(1,  "112 Huntington Ave","Suffolk", "Boston");
         hospDir.addHospital(newHospital);
-        Doctor d = new Doctor(p1);
-        newHospital.addDoctorToHospital(d);
+        Doctor d3 = new Doctor(p1);
+        newHospital.addDoctorToHospital(d3);
+        
         newHospital = comm_sapphire.createHospital(2,  "Sapphire Ave","Sapphire", "Boston");
         Doctor d1 = new Doctor(p6);
         Doctor d2 = new Doctor(p5);
         newHospital.addDoctorToHospital(d1);
         newHospital.addDoctorToHospital(d2);
         hospDir.addHospital(newHospital);
+        
         system.HosDirectory(hospDir);
         
+        newHospital = comm_suffolk.createHospital(3,  "112 H Ave","Sapphire", "Boston");
+        hospDir.addHospital(newHospital);
+        
         docDir = new DoctorDirectory();
-        docDir.addDoctor(d);
+        docDir.addDoctor(d3);
         docDir.addDoctor(d1);
         docDir.addDoctor(d2);
         
@@ -258,7 +263,7 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void patient_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_patient_buttonActionPerformed
         // TODO add your handling code here:
-        PatientPanel patientpanel = new PatientPanel(communityList, patDir, newHospital, city, hospDir);
+        PatientPanel patientpanel = new PatientPanel(docDir ,communityList, patDir, newHospital, city, hospDir);
         splitpane.setRightComponent(patientpanel);
     }//GEN-LAST:event_patient_buttonActionPerformed
 
@@ -274,7 +279,7 @@ public class MainFrame extends javax.swing.JFrame {
 //        CommunityAdminPanel commPanel = new CommunityAdminPanel(city, communityList);
 //        splitpane.setRightComponent(commPanel);
         
-        CommunityAdministratorPanel commPanel = new CommunityAdministratorPanel(city, communityList, patDir, hospDir,pd, docDir);
+        CommunityAdministratorPanel commPanel = new CommunityAdministratorPanel(system,city, communityList, patDir, hospDir,pd, docDir);
         splitpane.setRightComponent(commPanel);
     }//GEN-LAST:event_comadmin_buttonActionPerformed
 
@@ -287,7 +292,7 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void sysadmin_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sysadmin_buttonActionPerformed
         // TODO add your handling code here:
-        SystemAdminPanel newSystemPanel = new SystemAdminPanel(city, communityList, patDir, hospDir,pd, docDir,sys);
+        SystemAdminPanel newSystemPanel = new SystemAdminPanel(system, city, communityList, patDir, hospDir,pd, docDir,sys);
         splitpane.setRightComponent(newSystemPanel);
         splitpane.setDividerLocation(150);
     }//GEN-LAST:event_sysadmin_buttonActionPerformed

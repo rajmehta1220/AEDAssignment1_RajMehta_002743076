@@ -6,14 +6,7 @@ package ui;
 import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import model.City;
-import model.Community;
-import model.Doctor;
-import model.Hospital;
-import model.HospitalDirectory;
-import model.Patient;
-import model.PatientDirectory;
-import model.Person;
+import model.*;
 import parser.Parser;
 
 /**
@@ -39,6 +32,10 @@ public class PatientPanel extends javax.swing.JPanel {
     HospitalDirectory hospDir;
     Doctor dd;
     Hospital hh;
+    DoctorDirectory docDir;
+    DefaultTableModel model;
+    Doctor doc_pat;
+    Patient pat_doc;
     
     ArrayList<Hospital> arr_hosp;
     
@@ -46,23 +43,20 @@ public class PatientPanel extends javax.swing.JPanel {
         initComponents();  
     }
     
-    public PatientPanel(String[] communityList, PatientDirectory patDir, Hospital newHospital, City city, HospitalDirectory hospDir) {
+    public PatientPanel(DoctorDirectory docDir, String[] communityList, PatientDirectory patDir, Hospital newHospital, City city, HospitalDirectory hospDir) {
         initComponents();  
         this.patDir = patDir;
         this.newHospital = newHospital;
         this.city = city;
         this.hospDir = hospDir;
+        this.docDir = docDir;
         
         doctor_community_dropbox.removeAllItems();
-        
+        doctor_community_dropbox.addItem(" ");
        
         for(Community commList:city.getCommList()){
             doctor_community_dropbox.addItem(commList.getCommName());
         }
-        
-//         for(String s:communityList){
-//            doctor_community_dropbox.addItem(s);
-//        }
         
     }
 
@@ -95,6 +89,7 @@ public class PatientPanel extends javax.swing.JPanel {
         jLabel8 = new javax.swing.JLabel();
         patient_id = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -157,6 +152,13 @@ public class PatientPanel extends javax.swing.JPanel {
 
         jLabel9.setText("OR");
 
+        jButton1.setText("Book an Appointment");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -164,53 +166,53 @@ public class PatientPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(103, 103, 103)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(61, Short.MAX_VALUE))
+                .addContainerGap(126, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(82, 82, 82)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel9))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(82, 82, 82)
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel9))
-                            .addGroup(layout.createSequentialGroup()
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING))))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(doctor_community_dropbox, 0, 264, Short.MAX_VALUE)
-                            .addComponent(patient_id))
-                        .addGap(83, 83, 83))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 399, Short.MAX_VALUE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel4)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addComponent(jLabel5)
-                                        .addGap(26, 26, 26)))
-                                .addGap(26, 26, 26)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(doctor_id)
-                                    .addComponent(doctor_name)))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel6)
-                                    .addComponent(jLabel7))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(doctor_hospital)
-                                    .addComponent(doctor_community))))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(searchDoctor)
-                            .addComponent(view_doctor))))
-                .addGap(106, 106, 106))
+                            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING))))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(doctor_community_dropbox, 0, 264, Short.MAX_VALUE)
+                    .addComponent(patient_id))
+                .addGap(18, 18, 18)
+                .addComponent(searchDoctor)
+                .addGap(99, 99, 99))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(view_doctor)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 399, Short.MAX_VALUE)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel4)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                    .addComponent(jLabel5)
+                                    .addGap(26, 26, 26)))
+                            .addGap(26, 26, 26)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(doctor_id)
+                                .addComponent(doctor_name)))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel6)
+                                .addComponent(jLabel7))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(doctor_hospital)
+                                .addComponent(doctor_community)))))
+                .addGap(18, 18, 18)
+                .addComponent(jButton1)
+                .addGap(100, 100, 100))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -220,7 +222,8 @@ public class PatientPanel extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
-                    .addComponent(patient_id, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(patient_id, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(searchDoctor))
                 .addGap(9, 9, 9)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -233,15 +236,16 @@ public class PatientPanel extends javax.swing.JPanel {
                                 .addGap(24, 24, 24)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(jLabel3)
-                                    .addComponent(doctor_community_dropbox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(layout.createSequentialGroup()
+                                    .addComponent(doctor_community_dropbox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(39, 39, 39)
+                                .addComponent(view_doctor)
+                                .addGap(58, 58, 58)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(33, 33, 33))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(searchDoctor)
-                                .addGap(97, 97, 97)
-                                .addComponent(view_doctor)))
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(33, 33, 33)
+                                .addComponent(jButton1)
+                                .addGap(83, 83, 83)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
                             .addComponent(doctor_name, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -268,7 +272,6 @@ public class PatientPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
         
         System.out.println(patient_id.getText());
-        System.out.println(doctor_community_dropbox.getSelectedItem().toString());
         
         if(patient_id.getText().isEmpty() && doctor_community_dropbox.getSelectedItem().toString() == " "){
             JOptionPane.showMessageDialog(this, "Cannot keep both options empty");
@@ -278,57 +281,10 @@ public class PatientPanel extends javax.swing.JPanel {
             System.out.println("doctor_community_dropbox.getSelectedItem().toString(): "+doctor_community_dropbox.getSelectedItem().toString());
             JOptionPane.showMessageDialog(this, "Please Use only one option");
         }
-        else{
-            if(!patient_id.getText().isEmpty()){
-            patList = patDir.getPatientList();
-            for(int i=0; i<patList.size();i++){
-                System.out.println("Inside Pat Dir traversal");
-                System.out.println(patList.get(i).getPerson().getName());
-                if(Integer.parseInt(patient_id.getText()) == patList.get(i).getId() ){
-                    Person p = patList.get(i).getPerson();
-                    patCommunity = p.getComm();
-                    System.out.println("Patient belongs to:"+patCommunity);
-                    }     
-                }
-            if(patCommunity == ""){
-                JOptionPane.showMessageDialog(this, "Patient not found");
-            }
-            else{
-               
-                Community a;
-          
-                ArrayList<Doctor> doc_hosp_comm;
-                
-                ArrayList<Community> arr_comm =city.getCommList();
-                for(Community i : arr_comm){
-                    if(i.getCommName() == patCommunity){
-                         arr_hosp= i.getHospitalList();
-                    }
-                }
-                              
-                for(Hospital j:arr_hosp){
-                    doc_hosp_comm = j.getDoctorHospital();
-                    
-                    DefaultTableModel model = (DefaultTableModel) doctor_table.getModel();
-                    model.setRowCount(0);
-                    
-                    for(Doctor i: doc_hosp_comm){
-                        Object[] row = new Object[4];
-                        row[0] = i.getPerson().getName();
-                        row[1] = i.getId();
-                        row[2] = patCommunity;
-                        row[3] = j.getHospNum();
-                        model.addRow(row);
-                    }
-                }
-         
-                         
-            }
-            
-          }//end if search by pid
-            
-          if(doctor_community_dropbox.getSelectedItem().toString() != " "){
-              
+        else if(doctor_community_dropbox.getSelectedItem().toString() != " "){
+            System.out.println(doctor_community_dropbox.getSelectedItem().toString());
+          if(String.valueOf(doctor_community_dropbox.getSelectedItem()) != " "){
+              System.out.println("Inside Patient Community");
                String searchDoctorComm = doctor_community_dropbox.getSelectedItem().toString();
                for(Community c: city.getCommList()){
                    if(c.getCommName() == searchDoctorComm)
@@ -349,8 +305,49 @@ public class PatientPanel extends javax.swing.JPanel {
                    }
                }
           }
-            
         }
+        else{
+            if(!patient_id.getText().isEmpty()){
+            patList = patDir.getPatientList();
+            for(int i=0; i<patList.size();i++){
+                System.out.println("Inside Pat Dir traversal");
+                System.out.println(patList.get(i).getPerson().getName());
+                if(Integer.parseInt(patient_id.getText()) == patList.get(i).getId() ){
+                    Person p = patList.get(i).getPerson();
+                    patCommunity = p.getComm();
+                    System.out.println("Patient belongs to:"+patCommunity);
+                    }     
+                }
+            if(patCommunity == ""){
+                JOptionPane.showMessageDialog(this, "Patient not found");
+            }
+            else{
+               
+                Community a;
+                ArrayList<Doctor> doc_hosp_comm;
+                model = (DefaultTableModel) doctor_table.getModel();
+                model.setRowCount(0);
+                
+                for(Community i : city.getCommList()){
+                    if(i.getCommName() == patCommunity){
+                         arr_hosp= i.getHospitalList();
+                         for(Hospital l: i.getHospitalList()){
+                             doc_hosp_comm = l.getDoctorHospital();
+                             for(Doctor d: doc_hosp_comm){
+                                Object[] row = new Object[4];
+                                row[0] = d.getPerson().getName();
+                                row[1] = d.getId();
+                                row[2] = patCommunity;
+                                row[3] = l.getHospNum();
+                                model.addRow(row);
+                            }
+                         }
+                    }         
+            }
+        }//end if search by pid
+ 
+        }
+      }
    
     }//GEN-LAST:event_searchDoctorActionPerformed
 
@@ -379,6 +376,37 @@ public class PatientPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_view_doctorActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        model = (DefaultTableModel) doctor_table.getModel();
+        if(doctor_table.getSelectedRow()>=0 && !(patient_id.getText().isEmpty())){
+            long sel_did = (long) model.getValueAt(doctor_table.getSelectedRow(), 1);
+            
+            for(Patient p:patDir.getPatientList()){
+                if(Long.parseLong(patient_id.getText()) == p.getId()){
+                    pat_doc = p;
+                }//end if
+            }//end for 
+            
+            for(Doctor d:docDir.getDoctorList()){
+                if(sel_did == d.getId()){
+                    doc_pat = d;
+                    if(!(d.getPatientsAssignToDoctor()).contains(pat_doc))
+                    {
+                        d.BookPatientAppointnent(pat_doc);
+                        JOptionPane.showMessageDialog(this, "Booked Appointment for Patient "+patient_id.getText()+ " with doctor "+doc_pat.getPerson().getName());
+                    }
+                    else{JOptionPane.showMessageDialog(this, "Appoint already booked!");}
+                }//end if
+            }//end for
+            
+        }//end if
+        else{
+            JOptionPane.showMessageDialog(this, "Please select a Doctor or search by patId");
+        }//end else
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField doctor_community;
@@ -387,6 +415,7 @@ public class PatientPanel extends javax.swing.JPanel {
     private javax.swing.JTextField doctor_id;
     private javax.swing.JTextField doctor_name;
     private javax.swing.JTable doctor_table;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
