@@ -1,3 +1,4 @@
-# AEDAssignment1_RajMehta_002743076
+# Health Application
+## RajMehta - 002743076
 
 ![Class Diagram](classdiagram/HealthApplication.png)
