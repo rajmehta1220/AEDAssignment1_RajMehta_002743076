@@ -30,6 +30,8 @@ public class House {
         this.community = community;
         this.city = city;      
         this.familiyMembers=new ArrayList<Person>();
+        this.unitNum = "Unit " + String.valueOf(this.houseNum);
+        this.zipcode = 1234567;
         
     }
 
@@ -37,8 +39,14 @@ public class House {
         return houseNum;
     }
 
-    
+    public String getUnitNum() {
+        return unitNum;
+    }
 
+    public long getZipcode() {
+        return zipcode;
+    }
+    
     public String getStreetName() {
         return streetName;
     }

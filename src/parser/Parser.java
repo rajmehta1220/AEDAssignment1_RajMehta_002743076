@@ -99,4 +99,27 @@ public class Parser {
              return false;
          }
      }
+    
+    public boolean isInteger(String a){
+        try{
+            Integer.parseInt(a);
+            return true;
+        }catch(Exception e){return false;}
+    }
+    
+    public boolean isLong(String a){
+        try{
+            Long.parseLong(a);
+            return true;
+        }catch(Exception e){return false;}
+    }
+    
+    public boolean isFloat(String a){
+        try{
+            Float.parseFloat(a);
+            return true;
+        }catch(Exception e){
+            return false;
+        }
+    }
 }
