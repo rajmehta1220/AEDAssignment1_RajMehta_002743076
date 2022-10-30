@@ -71,6 +71,9 @@ public class HospitalAdministratorPanel extends javax.swing.JPanel {
         for(Hospital h : hospDir.getHospitalList()){
             hopital_list.addItem(String.valueOf(h.getHospNum()));
         }
+        
+        hospital_landingPage.setVisible(false);
+        loginPanel.setVisible(true);
     }
 
     /**
@@ -122,6 +125,13 @@ public class HospitalAdministratorPanel extends javax.swing.JPanel {
         populatetables = new javax.swing.JButton();
         hopital_list = new javax.swing.JComboBox<>();
         jButton1 = new javax.swing.JButton();
+        loginPanel = new javax.swing.JPanel();
+        jLabel47 = new javax.swing.JLabel();
+        jButton5 = new javax.swing.JButton();
+        sys_admin_pass = new javax.swing.JTextField();
+        sys_admin_id = new javax.swing.JTextField();
+        jLabel43 = new javax.swing.JLabel();
+        jLabel44 = new javax.swing.JLabel();
 
         setLayout(new java.awt.CardLayout());
 
@@ -501,6 +511,78 @@ public class HospitalAdministratorPanel extends javax.swing.JPanel {
         );
 
         add(manageDoctorsPanel, "card5");
+
+        loginPanel.setBackground(new java.awt.Color(0, 118, 82));
+
+        jLabel47.setFont(new java.awt.Font("Zapfino", 1, 24)); // NOI18N
+        jLabel47.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel47.setText("Hospital Admin Login -1");
+
+        jButton5.setFont(new java.awt.Font("Helvetica Neue", 0, 18)); // NOI18N
+        jButton5.setText("Login");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+
+        jLabel43.setFont(new java.awt.Font("Helvetica Neue", 0, 18)); // NOI18N
+        jLabel43.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel43.setText("ID:");
+
+        jLabel44.setFont(new java.awt.Font("Helvetica Neue", 0, 18)); // NOI18N
+        jLabel44.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel44.setText("Password:");
+
+        javax.swing.GroupLayout loginPanelLayout = new javax.swing.GroupLayout(loginPanel);
+        loginPanel.setLayout(loginPanelLayout);
+        loginPanelLayout.setHorizontalGroup(
+            loginPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(loginPanelLayout.createSequentialGroup()
+                .addGroup(loginPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(loginPanelLayout.createSequentialGroup()
+                        .addGap(549, 549, 549)
+                        .addComponent(sys_admin_pass, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(loginPanelLayout.createSequentialGroup()
+                        .addGap(429, 429, 429)
+                        .addComponent(jLabel47))
+                    .addGroup(loginPanelLayout.createSequentialGroup()
+                        .addGap(419, 419, 419)
+                        .addGroup(loginPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel44)
+                            .addComponent(jLabel43)))
+                    .addGroup(loginPanelLayout.createSequentialGroup()
+                        .addGap(486, 486, 486)
+                        .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(163, Short.MAX_VALUE))
+            .addGroup(loginPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(loginPanelLayout.createSequentialGroup()
+                    .addGap(548, 548, 548)
+                    .addComponent(sys_admin_id, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(235, Short.MAX_VALUE)))
+        );
+        loginPanelLayout.setVerticalGroup(
+            loginPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(loginPanelLayout.createSequentialGroup()
+                .addGap(33, 33, 33)
+                .addComponent(jLabel47)
+                .addGap(153, 153, 153)
+                .addComponent(jLabel43)
+                .addGap(36, 36, 36)
+                .addGroup(loginPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(sys_admin_pass, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel44))
+                .addGap(63, 63, 63)
+                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(128, 128, 128))
+            .addGroup(loginPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(loginPanelLayout.createSequentialGroup()
+                    .addGap(252, 252, 252)
+                    .addComponent(sys_admin_id, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(413, Short.MAX_VALUE)))
+        );
+
+        add(loginPanel, "card9");
     }// </editor-fold>//GEN-END:initComponents
 
     private void create_hospital_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_create_hospital_btnActionPerformed
@@ -585,47 +667,45 @@ public class HospitalAdministratorPanel extends javax.swing.JPanel {
         int HospNum1 = 100;
         if(parser.isInteger(hospNum.getText())){
             HospNum1 = Integer.parseInt(hospNum.getText());
-        }
-        else{JOptionPane.showMessageDialog(this,"Type Mismached");}
-        
-        for (Hospital h:hospDir.getHospitalList()){
-            if(h.getHospNum() == HospNum1){
-                JOptionPane.showMessageDialog(this,"This Hospital Already Exist");
-                true_hospNum = true;
+            
+                for (Hospital h:hospDir.getHospitalList()){
+                if(h.getHospNum() == HospNum1){
+                    JOptionPane.showMessageDialog(this,"This Hospital Already Exist");
+                    true_hospNum = true;
+                }
             }
-        }
-        
-        long Zipcode1 = 12987;
 
-        if(!true_hospNum){
-            String city1 = String.valueOf(cityJTextField.getSelectedItem());
-            String streetName1 = streetName.getText();
-            String community1 = String.valueOf(communityTextField.getSelectedItem());
-            if(parser.isInteger(hospNum.getText())){
-                Zipcode1 =Long.parseLong(zipcodeTextField.getText());
-            }
-            else{JOptionPane.showMessageDialog(this,"Type Mismached");}
-            
-            
-            for(City c: system.getCityList()){
-                if(c.getCitName() == city1){
-                    for(Community comm: c.getCommList()){
-                        if(comm.getCommName() == community1){
-                            create_hosp = comm;
+            long Zipcode1 = 12987;
+
+            if(!true_hospNum){
+                String city1 = String.valueOf(cityJTextField.getSelectedItem());
+                String streetName1 = streetName.getText();
+                String community1 = String.valueOf(communityTextField.getSelectedItem());
+                if(parser.isInteger(hospNum.getText())){
+                    Zipcode1 =Long.parseLong(zipcodeTextField.getText());
+                    for(City c: system.getCityList()){
+                    if(c.getCitName() == city1){
+                        for(Community comm: c.getCommList()){
+                            if(comm.getCommName() == community1){
+                                create_hosp = comm;
+                            }
                         }
                     }
                 }
-            }
-            
-            hospDir.createHospital(HospNum1,streetName1,community1,city1);
-            create_hosp.createHospital(HospNum1,streetName1,community1,city1);
-            populateHospTable();
-            JOptionPane.showMessageDialog(this,"New Hospital Created with Id: "+HospNum1);
 
-            hospNum.setText("");
-            streetName.setText("");
-            zipcodeTextField.setText("");
+                hospDir.createHospital(HospNum1,streetName1,community1,city1);
+                create_hosp.createHospital(HospNum1,streetName1,community1,city1);
+                populateHospTable();
+                JOptionPane.showMessageDialog(this,"New Hospital Created with Id: "+HospNum1);
+
+                hospNum.setText("");
+                streetName.setText("");
+                zipcodeTextField.setText("");
+                }
+                else{JOptionPane.showMessageDialog(this,"Type Mismached");}
+            }
         }
+        else{JOptionPane.showMessageDialog(this,"Type Mismached");}
         //        Community cc = city.getCommList();
 
     }//GEN-LAST:event_saveHospDetailsActionPerformed
@@ -789,6 +869,29 @@ public class HospitalAdministratorPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_cityJTextFieldActionPerformed
 
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+        if(!parser.checkNull(sys_admin_pass.getText()) && !parser.checkNull(sys_admin_id.getText())){
+            if(parser.isInteger(sys_admin_id.getText())){
+                int loginId = Integer.parseInt(sys_admin_id.getText());
+                String loginPass = sys_admin_pass.getText();
+
+                if(loginId == 1 && loginPass.equals("1111"))
+                {
+                    hospital_landingPage.setVisible(true);
+                    loginPanel.setVisible(false);
+                }
+            }
+            else{
+                JOptionPane.showMessageDialog(this,"ID should be INT");
+            }
+        }
+        else{
+            JOptionPane.showMessageDialog(this,"Cannot Keep null");
+        }
+
+    }//GEN-LAST:event_jButton5ActionPerformed
+
     public void populateHospTable(){
         model.setRowCount(0);
         for(City cty: system.getCityList()){
@@ -822,6 +925,7 @@ public class HospitalAdministratorPanel extends javax.swing.JPanel {
     private javax.swing.JPanel hospital_landingPage;
     private javax.swing.JTable hospital_table;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -832,10 +936,14 @@ public class HospitalAdministratorPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel43;
+    private javax.swing.JLabel jLabel44;
+    private javax.swing.JLabel jLabel47;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JPanel loginPanel;
     private javax.swing.JButton manageDoctorsButton;
     private javax.swing.JPanel manageDoctorsPanel;
     private javax.swing.JTable persontable;
@@ -844,6 +952,8 @@ public class HospitalAdministratorPanel extends javax.swing.JPanel {
     private javax.swing.JButton save_updateddoctor;
     private javax.swing.JButton selectCity;
     private javax.swing.JTextField streetName;
+    private javax.swing.JTextField sys_admin_id;
+    private javax.swing.JTextField sys_admin_pass;
     private javax.swing.JTextField update_hospital;
     private javax.swing.JButton update_hospital_btn;
     private javax.swing.JTextField zipcodeTextField;

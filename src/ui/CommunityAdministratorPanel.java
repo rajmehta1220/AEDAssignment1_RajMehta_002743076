@@ -89,6 +89,8 @@ public class CommunityAdministratorPanel extends javax.swing.JPanel {
                     houselistComboBox.addItem(String.valueOf(hosList.getHouseNum()));
                 }
         }
+        landingPanel.setVisible(false);
+        loginPanel.setVisible(true);
 
     }
     /**
@@ -186,6 +188,13 @@ public class CommunityAdministratorPanel extends javax.swing.JPanel {
         addpersontohousebtn = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        loginPanel = new javax.swing.JPanel();
+        jLabel47 = new javax.swing.JLabel();
+        jButton5 = new javax.swing.JButton();
+        sys_admin_pass = new javax.swing.JTextField();
+        sys_admin_id = new javax.swing.JTextField();
+        jLabel43 = new javax.swing.JLabel();
+        jLabel44 = new javax.swing.JLabel();
 
         setLayout(new java.awt.CardLayout());
 
@@ -996,6 +1005,78 @@ public class CommunityAdministratorPanel extends javax.swing.JPanel {
         );
 
         add(managePersons, "card6");
+
+        loginPanel.setBackground(new java.awt.Color(0, 118, 82));
+
+        jLabel47.setFont(new java.awt.Font("Zapfino", 1, 24)); // NOI18N
+        jLabel47.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel47.setText("Community Admin Login -2");
+
+        jButton5.setFont(new java.awt.Font("Helvetica Neue", 0, 18)); // NOI18N
+        jButton5.setText("Login");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+
+        jLabel43.setFont(new java.awt.Font("Helvetica Neue", 0, 18)); // NOI18N
+        jLabel43.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel43.setText("ID:");
+
+        jLabel44.setFont(new java.awt.Font("Helvetica Neue", 0, 18)); // NOI18N
+        jLabel44.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel44.setText("Password:");
+
+        javax.swing.GroupLayout loginPanelLayout = new javax.swing.GroupLayout(loginPanel);
+        loginPanel.setLayout(loginPanelLayout);
+        loginPanelLayout.setHorizontalGroup(
+            loginPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(loginPanelLayout.createSequentialGroup()
+                .addGroup(loginPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(loginPanelLayout.createSequentialGroup()
+                        .addGap(549, 549, 549)
+                        .addComponent(sys_admin_pass, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(loginPanelLayout.createSequentialGroup()
+                        .addGap(429, 429, 429)
+                        .addComponent(jLabel47))
+                    .addGroup(loginPanelLayout.createSequentialGroup()
+                        .addGap(419, 419, 419)
+                        .addGroup(loginPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel44)
+                            .addComponent(jLabel43)))
+                    .addGroup(loginPanelLayout.createSequentialGroup()
+                        .addGap(486, 486, 486)
+                        .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(319, Short.MAX_VALUE))
+            .addGroup(loginPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(loginPanelLayout.createSequentialGroup()
+                    .addGap(548, 548, 548)
+                    .addComponent(sys_admin_id, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(431, Short.MAX_VALUE)))
+        );
+        loginPanelLayout.setVerticalGroup(
+            loginPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(loginPanelLayout.createSequentialGroup()
+                .addGap(33, 33, 33)
+                .addComponent(jLabel47)
+                .addGap(153, 153, 153)
+                .addComponent(jLabel43)
+                .addGap(36, 36, 36)
+                .addGroup(loginPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(sys_admin_pass, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel44))
+                .addGap(63, 63, 63)
+                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(128, 128, 128))
+            .addGroup(loginPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(loginPanelLayout.createSequentialGroup()
+                    .addGap(252, 252, 252)
+                    .addComponent(sys_admin_id, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(405, Short.MAX_VALUE)))
+        );
+
+        add(loginPanel, "card9");
     }// </editor-fold>//GEN-END:initComponents
 
     private void update_hospital_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_update_hospital_btnActionPerformed
@@ -1529,6 +1610,28 @@ public class CommunityAdministratorPanel extends javax.swing.JPanel {
         update_doc_obj.getPerson().setContactNo(dno_table);
         update_doc_obj.getPerson().setDob(ddon_table);
     }//GEN-LAST:event_save_updateddoctorActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+        if(!parser.checkNull(sys_admin_pass.getText()) && !parser.checkNull(sys_admin_id.getText())){
+            if(parser.isInteger(sys_admin_id.getText())){
+                int loginId = Integer.parseInt(sys_admin_id.getText());
+                String loginPass = sys_admin_pass.getText();
+
+                if(loginId == 2 && loginPass.equals("2222"))
+                {
+                    landingPanel.setVisible(true);
+                    loginPanel.setVisible(false);
+                }
+            }
+            else{
+                JOptionPane.showMessageDialog(this,"ID should be INT");
+            }
+        }
+        else{
+            JOptionPane.showMessageDialog(this,"Cannot Keep null");
+        }
+    }//GEN-LAST:event_jButton5ActionPerformed
      
     public void PopulateManageDoctorTable(){
         DefaultTableModel model11 = (DefaultTableModel) doctor_table.getModel();
@@ -1573,6 +1676,7 @@ public class CommunityAdministratorPanel extends javax.swing.JPanel {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1597,6 +1701,9 @@ public class CommunityAdministratorPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel43;
+    private javax.swing.JLabel jLabel44;
+    private javax.swing.JLabel jLabel47;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
@@ -1608,6 +1715,7 @@ public class CommunityAdministratorPanel extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JPanel landingPanel;
+    private javax.swing.JPanel loginPanel;
     private javax.swing.JButton manageDoctorsButton;
     private javax.swing.JPanel manageDoctorsPanel;
     private javax.swing.JButton managePatientsButton;
@@ -1625,6 +1733,8 @@ public class CommunityAdministratorPanel extends javax.swing.JPanel {
     private javax.swing.JButton search_comm_btn;
     private javax.swing.JTextField streetName;
     private javax.swing.JTextField streetNamehos;
+    private javax.swing.JTextField sys_admin_id;
+    private javax.swing.JTextField sys_admin_pass;
     private javax.swing.JTextField update_hospital;
     private javax.swing.JButton update_hospital_btn;
     private javax.swing.JTextField update_house;

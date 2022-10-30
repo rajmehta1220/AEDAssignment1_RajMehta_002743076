@@ -83,7 +83,7 @@ public class SystemAdminPanel extends javax.swing.JPanel {
         showCityTable();
         showCommunityTable();
         showPatientTable();
-        
+       
         
         for(Community commList:city.getCommList()){
             for(House hosList: commList.getHouseList()){
@@ -96,7 +96,6 @@ public class SystemAdminPanel extends javax.swing.JPanel {
             community_dropbox.addItem(c.getCommName());
         }
         
-//        for(House h: community.getHouseList()){
         model_dr = (DefaultTableModel) person_dir_table.getModel();
         model_dr.setRowCount(0);
         
@@ -149,6 +148,8 @@ public class SystemAdminPanel extends javax.swing.JPanel {
             hopital_list1.addItem(String.valueOf(h.getHospNum()));
         }
     
+        loginPanel.setVisible(true);
+        landingPanel.setVisible(false);
     }
 
     /**
@@ -330,6 +331,13 @@ public class SystemAdminPanel extends javax.swing.JPanel {
         populatetables1 = new javax.swing.JButton();
         hopital_list1 = new javax.swing.JComboBox<>();
         jButton1 = new javax.swing.JButton();
+        loginPanel = new javax.swing.JPanel();
+        jLabel47 = new javax.swing.JLabel();
+        jButton5 = new javax.swing.JButton();
+        sys_admin_pass = new javax.swing.JTextField();
+        sys_admin_id = new javax.swing.JTextField();
+        jLabel43 = new javax.swing.JLabel();
+        jLabel44 = new javax.swing.JLabel();
 
         setLayout(new java.awt.CardLayout());
 
@@ -403,9 +411,9 @@ public class SystemAdminPanel extends javax.swing.JPanel {
                 .addGap(93, 93, 93)
                 .addGroup(landingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(manageDoctorbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(managePersonbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(manageCitybtn, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 497, Short.MAX_VALUE)
+                    .addComponent(manageCitybtn, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(managePersonbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(landingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(manageEnc, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(manageHospitalbtn, javax.swing.GroupLayout.DEFAULT_SIZE, 238, Short.MAX_VALUE)
@@ -1902,6 +1910,78 @@ public class SystemAdminPanel extends javax.swing.JPanel {
         hospAdmin.add(manageDoctorsPanel, "card5");
 
         add(hospAdmin, "card8");
+
+        loginPanel.setBackground(new java.awt.Color(0, 118, 82));
+
+        jLabel47.setFont(new java.awt.Font("Zapfino", 1, 24)); // NOI18N
+        jLabel47.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel47.setText("System Admin Login - 0");
+
+        jButton5.setFont(new java.awt.Font("Helvetica Neue", 0, 18)); // NOI18N
+        jButton5.setText("Login");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+
+        jLabel43.setFont(new java.awt.Font("Helvetica Neue", 0, 18)); // NOI18N
+        jLabel43.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel43.setText("ID:");
+
+        jLabel44.setFont(new java.awt.Font("Helvetica Neue", 0, 18)); // NOI18N
+        jLabel44.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel44.setText("Password:");
+
+        javax.swing.GroupLayout loginPanelLayout = new javax.swing.GroupLayout(loginPanel);
+        loginPanel.setLayout(loginPanelLayout);
+        loginPanelLayout.setHorizontalGroup(
+            loginPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(loginPanelLayout.createSequentialGroup()
+                .addGroup(loginPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(loginPanelLayout.createSequentialGroup()
+                        .addGap(549, 549, 549)
+                        .addComponent(sys_admin_pass, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(loginPanelLayout.createSequentialGroup()
+                        .addGap(429, 429, 429)
+                        .addComponent(jLabel47))
+                    .addGroup(loginPanelLayout.createSequentialGroup()
+                        .addGap(419, 419, 419)
+                        .addGroup(loginPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel44)
+                            .addComponent(jLabel43)))
+                    .addGroup(loginPanelLayout.createSequentialGroup()
+                        .addGap(486, 486, 486)
+                        .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(417, Short.MAX_VALUE))
+            .addGroup(loginPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(loginPanelLayout.createSequentialGroup()
+                    .addGap(548, 548, 548)
+                    .addComponent(sys_admin_id, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(476, Short.MAX_VALUE)))
+        );
+        loginPanelLayout.setVerticalGroup(
+            loginPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(loginPanelLayout.createSequentialGroup()
+                .addGap(33, 33, 33)
+                .addComponent(jLabel47)
+                .addGap(153, 153, 153)
+                .addComponent(jLabel43)
+                .addGap(36, 36, 36)
+                .addGroup(loginPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(sys_admin_pass, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel44))
+                .addGap(63, 63, 63)
+                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(128, 128, 128))
+            .addGroup(loginPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(loginPanelLayout.createSequentialGroup()
+                    .addGap(252, 252, 252)
+                    .addComponent(sys_admin_id, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(326, Short.MAX_VALUE)))
+        );
+
+        add(loginPanel, "card9");
     }// </editor-fold>//GEN-END:initComponents
 
     private void managePersonbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_managePersonbtnActionPerformed
@@ -2616,12 +2696,11 @@ public class SystemAdminPanel extends javax.swing.JPanel {
 
     private void update_hospital_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_update_hospital_btnActionPerformed
         // TODO add your handling code here:
-
         if(hospital_table1.getSelectedRow()<0){
             JOptionPane.showMessageDialog(this, "Please select a Hospital");
         }
         else{
-            int hospNum_check= (int)model.getValueAt(hospital_table1.getSelectedRow(), 0);
+            int hospNum_check= (int) model.getValueAt(hospital_table1.getSelectedRow(), 0);
             String hospupdate_str = update_hospital1.getText();
             for(City ci: sys.getCityList()){
                 for(Community c: ci.getCommList()){
@@ -2641,13 +2720,13 @@ public class SystemAdminPanel extends javax.swing.JPanel {
                 if(hospitalUpdateCriteria == "hospNum"){
                     int new_hospNum = Integer.parseInt(hospupdate_str);
                     hospital.setHospNum(new_hospNum);
-                    populateHospTable();
+                    populateHospTable1();
                 }
 
                 if(hospitalUpdateCriteria == "streetName"){
                     String new_streetName = hospupdate_str;
                     hospital.setStreetName(new_streetName);
-                    populateHospTable();
+                    populateHospTable1();
                 }
 
                 if(hospitalUpdateCriteria == "zipCode"){
@@ -2681,41 +2760,47 @@ public class SystemAdminPanel extends javax.swing.JPanel {
     private void saveHospDetailsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveHospDetailsActionPerformed
         // TODO add your handling code here:
         boolean true_hospNum = false;
-        int HospNum1 = Integer.parseInt(hospNum.getText());
-
-        for (Hospital h:hospDir.getHospitalList()){
-            if(h.getHospNum() == HospNum1){
-                JOptionPane.showMessageDialog(this,"This Hospital Already Exist");
-                true_hospNum = true;
-            }
+        if(!parser.isInteger(hospNum.getText()) && parser.checkNull(hospNum.getText())){
+            JOptionPane.showMessageDialog(this,"TYPE MISMATCHED!");
         }
+        else{
+            int HospNum1 = Integer.parseInt(hospNum.getText());
 
-        if(!true_hospNum){
-            String city1 = String.valueOf(cityJTextField.getSelectedItem());
-            String streetName1 = streetName.getText();
-            String community1 = String.valueOf(communityTextField.getSelectedItem());
-            Long Zipcode1 =Long.parseLong(zipcodeTextField.getText());
-
-            for(City c: system.getCityList()){
-                if(c.getCitName() == city1){
-                    for(Community comm: c.getCommList()){
-                        if(comm.getCommName() == community1){
-                            create_hosp = comm;
-                        }
-                    }
+            for (Hospital h:hospDir.getHospitalList()){
+                if(h.getHospNum() == HospNum1){
+                    JOptionPane.showMessageDialog(this,"This Hospital Already Exist");
+                    true_hospNum = true;
                 }
             }
 
-            hospDir.createHospital(HospNum1,streetName1,community1,city1);
-            System.out.println("No of total Hospitals: "+(hospDir.getHospitalList()).size());
-            create_hosp.createHospital(HospNum1,streetName1,community1,city1);
-            populateHospTable1();
-            JOptionPane.showMessageDialog(this,"New Hospital Created with Id: "+HospNum1);
+            if(!true_hospNum){
+                String city1 = String.valueOf(cityJTextField.getSelectedItem());
+                String streetName1 = streetName.getText();
+                String community1 = String.valueOf(communityTextField.getSelectedItem());
+                Long Zipcode1 =Long.parseLong(zipcodeTextField.getText());
 
-            hospNum.setText("");
-            streetName.setText("");
-            zipcodeTextField.setText("");
+                for(City c: system.getCityList()){
+                    if(c.getCitName() == city1){
+                        for(Community comm: c.getCommList()){
+                            if(comm.getCommName() == community1){
+                                create_hosp = comm;
+                            }
+                        }
+                    }
+                }
+
+                hospDir.createHospital(HospNum1,streetName1,community1,city1);
+                System.out.println("No of total Hospitals: "+(hospDir.getHospitalList()).size());
+                create_hosp.createHospital(HospNum1,streetName1,community1,city1);
+                populateHospTable1();
+                JOptionPane.showMessageDialog(this,"New Hospital Created with Id: "+HospNum1);
+
+                hospNum.setText("");
+                streetName.setText("");
+                zipcodeTextField.setText("");
+            }
         }
+        
         //        Community cc = city.getCommList();
     }//GEN-LAST:event_saveHospDetailsActionPerformed
 
@@ -2911,7 +2996,7 @@ public class SystemAdminPanel extends javax.swing.JPanel {
         }
         
         if(flagg == true){
-            JOptionPane.showMessageDialog(this,"Cannot Delete Hospital with Patients");
+            JOptionPane.showMessageDialog(this,"Cannot Delete Hospital with Doctors");
         }
     }//GEN-LAST:event_delete_hosp_btnActionPerformed
 
@@ -3085,6 +3170,29 @@ public class SystemAdminPanel extends javax.swing.JPanel {
         PopulateManageDoctorTable1();
         
     }//GEN-LAST:event_delDrBtnActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+        if(!parser.checkNull(sys_admin_pass.getText()) && !parser.checkNull(sys_admin_id.getText())){
+            if(parser.isInteger(sys_admin_id.getText())){
+                int loginId = Integer.parseInt(sys_admin_id.getText());
+                String loginPass = sys_admin_pass.getText();
+                
+                if(loginId == 0 && loginPass.equals("0000"))
+                {
+                    landingPanel.setVisible(true);
+                    loginPanel.setVisible(false);
+                }
+            }
+            else{
+                JOptionPane.showMessageDialog(this,"ID should be INT");
+            }
+        }
+        else{
+            JOptionPane.showMessageDialog(this,"Cannot Keep null");
+        }
+        
+    }//GEN-LAST:event_jButton5ActionPerformed
     
     public void populateHospTable1(){
         model = (DefaultTableModel) hospital_table1.getModel();
@@ -3280,6 +3388,7 @@ public class SystemAdminPanel extends javax.swing.JPanel {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -3311,6 +3420,9 @@ public class SystemAdminPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel36;
     private javax.swing.JLabel jLabel37;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel43;
+    private javax.swing.JLabel jLabel44;
+    private javax.swing.JLabel jLabel47;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
@@ -3337,6 +3449,7 @@ public class SystemAdminPanel extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane9;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JPanel landingPanel;
+    private javax.swing.JPanel loginPanel;
     private javax.swing.JPanel manageCity;
     private javax.swing.JButton manageCitybtn;
     private javax.swing.JButton manageDoctorbtn;
@@ -3380,6 +3493,8 @@ public class SystemAdminPanel extends javax.swing.JPanel {
     private javax.swing.JButton selectCity;
     private javax.swing.JTextField streetName;
     private javax.swing.JTextArea symptoms_ui;
+    private javax.swing.JTextField sys_admin_id;
+    private javax.swing.JTextField sys_admin_pass;
     private javax.swing.JButton updateCityBtn;
     private javax.swing.JButton updateCommunityBtn;
     private javax.swing.JButton updateEncounter;
@@ -3399,4 +3514,5 @@ public class SystemAdminPanel extends javax.swing.JPanel {
     private javax.swing.JTextField weight_ui;
     private javax.swing.JTextField zipcodeTextField;
     // End of variables declaration//GEN-END:variables
+
 }

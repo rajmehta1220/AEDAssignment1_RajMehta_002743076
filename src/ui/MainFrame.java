@@ -21,9 +21,7 @@ import model.PatientDirectory;
 import model.Person;
 import model.PersonDirectory;
 import parser.Parser;
-
-
-    //UI
+//UI
 import java.net.URL;
 import java.awt.Dimension;
 import javax.swing.ImageIcon;
@@ -44,8 +42,6 @@ public class MainFrame extends javax.swing.JFrame {
     DoctorDirectory docDir;
     MainSystem sys;
     
-    
-
     /**
      * Creates new form MainFrame
      */
