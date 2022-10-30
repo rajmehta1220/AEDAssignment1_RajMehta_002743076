@@ -30,6 +30,7 @@ public class DoctorPanel extends javax.swing.JPanel {
     Doctor d_pat;
     long patient_id_check;
     float bloodPressure, weight, heartRate;
+    long docid_cred;
     
     /** Creates new form DotorPanel */
     public DoctorPanel() {
@@ -440,44 +441,51 @@ public class DoctorPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Cannot keep login fields empty");
         }
         else{
-        long docid_cred = Long.parseLong(doc_id.getText());
-        String docpass_cred = String.valueOf(doc_pass.getText());
-        for(Doctor d: docDir.getDoctorList()){
-            
-            System.out.println("Given: "+docpass_cred+ " Obj: "+d.getDocPass());
-            System.out.println("GivenId: "+docid_cred+ " ObjID: "+d.getId());
-            if(d.getId() == docid_cred && (d.getDocPass() == null ? docpass_cred == null : d.getDocPass().equals(docpass_cred))){
-                System.out.print("Validation Matched");
-                d_pat = d;
-                logged_in =true; 
-                
+            if(!parser.isLong(doc_id.getText())){
+                JOptionPane.showMessageDialog(this, "Type Mismached!");
             }
-        }
-        if(!logged_in){
-            JOptionPane.showMessageDialog(this, "Incorrect Login Details");
-        }
-        
-        for(Patient p : d_pat.getPatientsAssignToDoctor()){
-                if(patient_id_check == p.getId()){
-                    patient = p;
-            }
-         }
+            else{
+            docid_cred = Long.parseLong(doc_id.getText());
+            String docpass_cred = String.valueOf(doc_pass.getText());
+            for(Doctor d: docDir.getDoctorList()){
 
-        model = (DefaultTableModel) person_dir_table.getModel();
-        model.setRowCount(0);
-        
-        model1 = (DefaultTableModel) person_directory_table.getModel();
-        model1.setRowCount(0);
-                    
-        for(Patient p:d_pat.getPatientsAssignToDoctor()){
-            Object[] row= new Object[3];
-            row[0]= p.getId();
-            row[1]= p.getPerson().getName();
-            row[2]= p.getPerson().getAge();
-            model.addRow(row);
-            model1.addRow(row);
-        
-        }
+                System.out.println("Given: "+docpass_cred+ " Obj: "+d.getDocPass());
+                System.out.println("GivenId: "+docid_cred+ " ObjID: "+d.getId());
+                if(d.getId() == docid_cred && (d.getDocPass() == null ? docpass_cred == null : d.getDocPass().equals(docpass_cred))){
+                    System.out.print("Validation Matched");
+                    d_pat = d;
+                    logged_in =true; 
+
+                }
+            }
+            if(!logged_in){
+                JOptionPane.showMessageDialog(this, "Incorrect Login Details");
+            }
+            else{
+            for(Patient p : d_pat.getPatientsAssignToDoctor()){
+                    if(patient_id_check == p.getId()){
+                        patient = p;
+                }
+             }
+
+            model = (DefaultTableModel) person_dir_table.getModel();
+            model.setRowCount(0);
+
+            model1 = (DefaultTableModel) person_directory_table.getModel();
+            model1.setRowCount(0);
+
+            for(Patient p:d_pat.getPatientsAssignToDoctor()){
+                Object[] row= new Object[3];
+                row[0]= p.getId();
+                row[1]= p.getPerson().getName();
+                row[2]= p.getPerson().getAge();
+                model.addRow(row);
+                model1.addRow(row);
+
+            }
+            }
+            }
+            
         }
     }//GEN-LAST:event_login_doctorActionPerformed
 

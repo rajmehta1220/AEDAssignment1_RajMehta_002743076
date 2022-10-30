@@ -285,11 +285,6 @@ public class PatientPanel extends javax.swing.JPanel {
     private void searchDoctorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchDoctorActionPerformed
         // TODO add your handling code here:
         
-        
-        if(!parser.isLong(patient_id.getText())){
-            JOptionPane.showMessageDialog(this, "Mismatched ID types");
-        }
-        
         if(patient_id.getText().isEmpty() && doctor_community_dropbox.getSelectedItem().toString() == " "){
             JOptionPane.showMessageDialog(this, "Cannot keep both options empty");
         }
@@ -324,6 +319,9 @@ public class PatientPanel extends javax.swing.JPanel {
           }
         }
         else{
+            if(!parser.isLong(patient_id.getText())){
+            JOptionPane.showMessageDialog(this, "Mismatched ID types");
+            }   
             if(!patient_id.getText().isEmpty()){
             patList = patDir.getPatientList();
             for(int i=0; i<patList.size();i++){

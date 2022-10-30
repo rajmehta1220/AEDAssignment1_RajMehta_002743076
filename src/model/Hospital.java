@@ -5,6 +5,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  *
@@ -18,6 +19,8 @@ public class Hospital {
     private String city;
     private long zipcode;
     ArrayList<Doctor> doctorHospital;
+    Random r = new Random( System.currentTimeMillis() );
+
     
     public Hospital(){}
     
@@ -27,6 +30,7 @@ public class Hospital {
         this.community = community;
         this.city = city;      
         this.doctorHospital=new ArrayList<Doctor>();
+        this.zipcode = 10000 + r.nextInt(20000);
     }
     
     public void addDoctorToHospital(Doctor doctor){

@@ -58,6 +58,92 @@ public class MainFrame extends javax.swing.JFrame {
         pd = new PersonDirectory();
         docDir = new DoctorDirectory();
         sys = new MainSystem();
+        
+        //Autofill Values
+        String dob = "20-Dec-2000";
+        Parser parser = new Parser();
+        LocalDate date = parser.convertToDate(dob);
+        
+        
+        system = new MainSystem();
+        
+        Person p1 = pd.createPerson(02323232323, "Raj", date, "Suffolk");//doc
+        Person p2 = pd.createPerson(12345, "Het", date, "Suffolk"); //pat
+        Person p3 = pd.createPerson(0232, "Sneh", date, "Suffolk"); //pat
+        
+        Person p4 = pd.createPerson(02323543, "Heet", date, "Sapphire");  //pat
+        Person p5 = pd.createPerson(027563334, "Varu", date, "Sapphire"); //doc
+        Person p6 = pd.createPerson(1234323, "Dhb", date, "Sapphire"); //doc
+        Person p7 = pd.createPerson(12343234, "Sanvi", date, "Sapphire"); //Not Doc nor Pat
+        
+        
+        patDir.createPatient(p2);
+        patDir.createPatient(p3);
+        patDir.createPatient(p4);
+        
+        System.out.println("Patients List: ");
+        ArrayList<Patient> ptt = patDir.getPatientList();
+        for(Patient i:ptt){
+            System.out.println(i.getId());
+            System.out.println(i.getPerson().getName());
+        }
+
+        city = new City("Boston");
+        sys.getCityList().add(city);
+        system.addNewCity(city);
+        Community comm_suffolk = city.newCommunity("Suffolk");
+        Community comm_sapphire = city.newCommunity("Sapphire");
+        
+        House h1 = comm_suffolk.createHouse(1,"111 Huntington Ave", "Suffolk","Boston");
+        h1.addPersonToHouse(p3);
+        h1.addPersonToHouse(p2);
+        House h2 = comm_suffolk.createHouse(2,"222 Huntington Ave", "Suffolk","Boston");
+        h2.addPersonToHouse(p1);
+       
+        House h3 = comm_sapphire.createHouse(45,"222 Sapphire Ave", "Sapphire","Boston");
+        h3.addPersonToHouse(p4);
+        h3.addPersonToHouse(p5);
+        House h4 = comm_sapphire.createHouse(56,"222 Sapphire Ave", "Sapphire","Boston");
+        h4.addPersonToHouse(p6);
+               
+        newHospital = comm_suffolk.createHospital(1,  "112 Huntington Ave","Suffolk", "Boston");
+        hospDir.addHospital(newHospital);
+        Doctor d3 = new Doctor(p1);
+        newHospital.addDoctorToHospital(d3);
+        
+        newHospital = comm_sapphire.createHospital(2,  "Sapphire Ave","Sapphire", "Boston");
+        Doctor d1 = new Doctor(p6);
+        Doctor d2 = new Doctor(p5);
+        newHospital.addDoctorToHospital(d1);
+        newHospital.addDoctorToHospital(d2);
+        hospDir.addHospital(newHospital);
+        
+        system.HosDirectory(hospDir);
+        
+        newHospital = comm_suffolk.createHospital(3,  "112 H Ave","Sapphire", "Boston");
+        hospDir.addHospital(newHospital);
+        
+        docDir = new DoctorDirectory();
+        docDir.addDoctor(d3);
+        docDir.addDoctor(d1);
+        docDir.addDoctor(d2);
+        
+        system.PatDirectory(patDir);
+        system.PerDirectory(pd);
+        
+        ArrayList<Community> commList = new ArrayList<Community>();
+        commList = city.getCommList();
+        
+        int size = commList.size();
+        communityList = new String[size+1];
+        
+        commList = city.getCommList();
+        
+        communityList[0]=" ";
+        
+        for(int i=0; i<commList.size(); i++){
+            communityList[i+1]= commList.get(i).getCommName();
+        }
       
     }
 
@@ -267,94 +353,7 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void autofill_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_autofill_btnActionPerformed
         // TODO add your handling code here:
-        String dob = "20-Dec-2000";
-        Parser parser = new Parser();
-        LocalDate date = parser.convertToDate(dob);
-        
-        
-        system = new MainSystem();
-        
-        Person p1 = pd.createPerson(02323232323, "Raj", date, "Suffolk");//doc
-        Person p2 = pd.createPerson(12345, "Het", date, "Suffolk"); //pat
-        Person p3 = pd.createPerson(0232, "Sneh", date, "Suffolk"); //pat
-        
-        Person p4 = pd.createPerson(02323543, "Heet", date, "Sapphire");  //pat
-        Person p5 = pd.createPerson(027563334, "Varu", date, "Sapphire"); //doc
-        Person p6 = pd.createPerson(1234323, "Dhb", date, "Sapphire"); //doc
-        Person p7 = pd.createPerson(12343234, "Sanvi", date, "Sapphire"); //Not Doc nor Pat
-        
-        
-        patDir.createPatient(p2);
-        patDir.createPatient(p3);
-        patDir.createPatient(p4);
-        
-        System.out.println("Patients List: ");
-        ArrayList<Patient> ptt = patDir.getPatientList();
-        for(Patient i:ptt){
-            System.out.println(i.getId());
-            System.out.println(i.getPerson().getName());
-        }
 
-        city = new City("Boston");
-        sys.getCityList().add(city);
-        system.addNewCity(city);
-        Community comm_suffolk = city.newCommunity("Suffolk");
-        Community comm_sapphire = city.newCommunity("Sapphire");
-        
-        House h1 = comm_suffolk.createHouse(1,"111 Huntington Ave", "Suffolk","Boston");
-        h1.addPersonToHouse(p3);
-        h1.addPersonToHouse(p2);
-        House h2 = comm_suffolk.createHouse(2,"222 Huntington Ave", "Suffolk","Boston");
-        h2.addPersonToHouse(p1);
-       
-        House h3 = comm_sapphire.createHouse(45,"222 Sapphire Ave", "Sapphire","Boston");
-        h3.addPersonToHouse(p4);
-        h3.addPersonToHouse(p5);
-        House h4 = comm_sapphire.createHouse(56,"222 Sapphire Ave", "Sapphire","Boston");
-        h4.addPersonToHouse(p6);
-               
-        newHospital = comm_suffolk.createHospital(1,  "112 Huntington Ave","Suffolk", "Boston");
-        hospDir.addHospital(newHospital);
-        Doctor d3 = new Doctor(p1);
-        newHospital.addDoctorToHospital(d3);
-        
-        newHospital = comm_sapphire.createHospital(2,  "Sapphire Ave","Sapphire", "Boston");
-        Doctor d1 = new Doctor(p6);
-        Doctor d2 = new Doctor(p5);
-        newHospital.addDoctorToHospital(d1);
-        newHospital.addDoctorToHospital(d2);
-        hospDir.addHospital(newHospital);
-        
-        system.HosDirectory(hospDir);
-        
-        newHospital = comm_suffolk.createHospital(3,  "112 H Ave","Sapphire", "Boston");
-        hospDir.addHospital(newHospital);
-        
-        docDir = new DoctorDirectory();
-        docDir.addDoctor(d3);
-        docDir.addDoctor(d1);
-        docDir.addDoctor(d2);
-        
-        system.PatDirectory(patDir);
-        system.PerDirectory(pd);
-        
-        ArrayList<Community> commList = new ArrayList<Community>();
-        commList = city.getCommList();
-        
-        int size = commList.size();
-        communityList = new String[size+1];
-        
-        commList = city.getCommList();
-        
-        communityList[0]=" ";
-        
-        for(int i=0; i<commList.size(); i++){
-            communityList[i+1]= commList.get(i).getCommName();
-        }
-        
-        System.out.println("Done");
-        
-        
     }//GEN-LAST:event_autofill_btnActionPerformed
 
     /**

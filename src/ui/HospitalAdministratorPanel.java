@@ -129,13 +129,13 @@ public class HospitalAdministratorPanel extends javax.swing.JPanel {
 
         hospital_table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "Hosp num", "StreetName", "City", "ZipCode", "No of Docs"
+                "Hosp num", "StreetName", "City", "ZipCode"
             }
         ));
         jScrollPane1.setViewportView(hospital_table);
@@ -519,7 +519,11 @@ public class HospitalAdministratorPanel extends javax.swing.JPanel {
         }
         else{
             int hospNum_check= (int)model.getValueAt(hospital_table.getSelectedRow(), 0);
-            String hospupdate_str = update_hospital.getText();
+            if(update_hospital.getText().isEmpty()){
+                JOptionPane.showMessageDialog(this, "Cannot keep null");
+            }
+            else{
+                String hospupdate_str = update_hospital.getText();
             for(Community c: city.getCommList()){
             for(Hospital i: c.getHospitalList()){
                 if(hospNum_check == i.getHospNum()){
@@ -552,6 +556,8 @@ public class HospitalAdministratorPanel extends javax.swing.JPanel {
                 }
 
             }
+            }
+            
         }
     }//GEN-LAST:event_update_hospital_btnActionPerformed
 
