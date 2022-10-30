@@ -81,8 +81,6 @@ public class Community {
     public void setHospitalList(ArrayList<Hospital> hospitalList) {
         this.hospitalList = hospitalList;
     }
-
-    
     
     @Override
     public String toString() {

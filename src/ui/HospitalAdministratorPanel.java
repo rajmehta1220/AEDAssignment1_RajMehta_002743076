@@ -266,6 +266,11 @@ public class HospitalAdministratorPanel extends javax.swing.JPanel {
         communityTextField.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         cityJTextField.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cityJTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cityJTextFieldActionPerformed(evt);
+            }
+        });
 
         selectCity.setText("Select City");
         selectCity.addActionListener(new java.awt.event.ActionListener() {
@@ -774,17 +779,23 @@ public class HospitalAdministratorPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_selectCityActionPerformed
 
+    private void cityJTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cityJTextFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cityJTextFieldActionPerformed
+
     public void populateHospTable(){
         model.setRowCount(0);
-        for(Community c: city.getCommList()){
-            for(Hospital h: c.getHospitalList()){
-                Object[] row = new Object[5];
-                row[0]= h.getHospNum();
-                row[1]= h.getStreetName();
-                row[2]= h.getCity();
-                row[3]= h.getZipcode();
-                row[4]= (h.getDoctorHospital()).size();
-                model.addRow(row);
+        for(City cty: system.getCityList()){
+            for(Community c: cty.getCommList()){
+                for(Hospital h: c.getHospitalList()){
+                    Object[] row = new Object[5];
+                    row[0]= h.getHospNum();
+                    row[1]= h.getStreetName();
+                    row[2]= h.getCity();
+                    row[3]= h.getZipcode();
+                    row[4]= (h.getDoctorHospital()).size();
+                    model.addRow(row);
+                }
             }
         }
     }

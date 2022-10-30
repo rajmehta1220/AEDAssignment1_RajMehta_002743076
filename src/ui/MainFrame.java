@@ -254,7 +254,7 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void sysadmin_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sysadmin_buttonActionPerformed
         // TODO add your handling code here:
-        SystemAdminPanel newSystemPanel = new SystemAdminPanel(system, city, communityList, patDir, hospDir,pd, docDir,sys);
+        SystemAdminPanel newSystemPanel = new SystemAdminPanel(system, city, communityList, patDir, hospDir,pd, docDir);
         splitpane.setRightComponent(newSystemPanel);
         splitpane.setDividerLocation(150);
     }//GEN-LAST:event_sysadmin_buttonActionPerformed

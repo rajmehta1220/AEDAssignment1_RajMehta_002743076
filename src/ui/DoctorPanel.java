@@ -29,6 +29,7 @@ public class DoctorPanel extends javax.swing.JPanel {
     boolean logged_in = false;
     Doctor d_pat;
     long patient_id_check;
+    float bloodPressure, weight, heartRate;
     
     /** Creates new form DotorPanel */
     public DoctorPanel() {
@@ -344,7 +345,7 @@ public class DoctorPanel extends javax.swing.JPanel {
 
     private void add_vitals_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_add_vitals_buttonActionPerformed
         // TODO add your handling code here:
-   
+        int counter = 0;
         if(logged_in){
             if(person_dir_table.getSelectedRow()<0){
                 JOptionPane.showMessageDialog(this, "Please select a Patient");
@@ -362,25 +363,33 @@ public class DoctorPanel extends javax.swing.JPanel {
                 if(!parser.checkNull(blood_pressure.getText()) && !parser.isInteger(blood_pressure.getText())){
                     JOptionPane.showMessageDialog(this, "Type Mismached for BP");
                 }
+                else{
+                    bloodPressure = Float.parseFloat(blood_pressure.getText());
+                    counter++;
+                }
                 
                 if(!parser.checkNull(heart_rate.getText()) && !parser.isInteger(heart_rate.getText())){
                     JOptionPane.showMessageDialog(this, "Type Mismached for HR");
+                }
+                else{
+                    heartRate = Float.parseFloat(heart_rate.getText());
+                    counter++;
                 }
                 
                 if(!parser.checkNull(weight_ui.getText()) && !parser.isInteger(weight_ui.getText())){
                     JOptionPane.showMessageDialog(this, "Type Mismached for Weight");
                 }
-                
-                float bloodPressure = Float.parseFloat(blood_pressure.getText());
-                float heartRate = Float.parseFloat(heart_rate.getText());
-                float weight = Float.parseFloat(weight_ui.getText());
+                else{
+                    weight = Float.parseFloat(weight_ui.getText());
+                    counter++;
+                }
                 String symptoms = symptoms_ui.getText();
                 
                 
-
-                patient.getEncounterHistory().addEncounter(new VitalSigns(bloodPressure, heartRate, weight, symptoms));
-                JOptionPane.showMessageDialog(this, "Visit saved successfully!");
-
+                if(counter == 3){
+                    patient.getEncounterHistory().addEncounter(new VitalSigns(bloodPressure, heartRate, weight, symptoms));
+                    JOptionPane.showMessageDialog(this, "Visit saved successfully!");
+                }
             }//end else
         }//logged if
         else{

@@ -44,7 +44,7 @@ public class SystemAdminPanel extends javax.swing.JPanel {
     DefaultTableModel model;
     String selectedCommunity;
     Community community;
-    Hospital hospital;
+    Hospital hospital, hosp_dupl;
     HospitalDirectory hospitalDirectory;
     Person selectedPerson;
     Hospital selectedHospital;
@@ -52,20 +52,25 @@ public class SystemAdminPanel extends javax.swing.JPanel {
     MainSystem system;
     Community create_hosp;
     City create_hosp_comm;
-    Doctor update_doc_obj;
+    Doctor update_doc_obj, to_del_doc;
     DefaultTableModel model12;
     DefaultTableModel model11;
     Hospital to_delete;
     Community comm_delHosp;
+    float bloodPressure;
+    float heartRate;
+    float weight;
+    City city_delcomm;
+    Community comm_del;
 
     
-    public SystemAdminPanel(MainSystem system,City city, String[] communityDropboxList, PatientDirectory patDir, HospitalDirectory hospDir,PersonDirectory pd, DoctorDirectory docDir, MainSystem sys) {
+    public SystemAdminPanel(MainSystem system,City city, String[] communityDropboxList, PatientDirectory patDir, HospitalDirectory hospDir,PersonDirectory pd, DoctorDirectory docDir) {
         initComponents();
         this.city = city;
         this.communityDropboxList = communityDropboxList;
         this.pd=pd;
         this.docDir=docDir;
-        this.sys = sys;
+        this.sys = system;
         this.patDir = patDir;
         this.hospitalDirectory = hospDir;
         this.system = system;
@@ -262,7 +267,6 @@ public class SystemAdminPanel extends javax.swing.JPanel {
         manageDoctors = new javax.swing.JPanel();
         jScrollPane11 = new javax.swing.JScrollPane();
         doctor_table = new javax.swing.JTable();
-        jLabel24 = new javax.swing.JLabel();
         jLabel25 = new javax.swing.JLabel();
         jLabel26 = new javax.swing.JLabel();
         jLabel27 = new javax.swing.JLabel();
@@ -284,6 +288,8 @@ public class SystemAdminPanel extends javax.swing.JPanel {
         update_hospital = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
+        delDrBtn = new javax.swing.JButton();
         hospAdmin = new javax.swing.JPanel();
         hospital_landingPage = new javax.swing.JPanel();
         jScrollPane14 = new javax.swing.JScrollPane();
@@ -717,7 +723,7 @@ public class SystemAdminPanel extends javax.swing.JPanel {
                 {null, null}
             },
             new String [] {
-                "Community Name", "City Name"
+                "City Name", "Community Name"
             }
         ));
         jScrollPane3.setViewportView(communitytable);
@@ -1307,12 +1313,6 @@ public class SystemAdminPanel extends javax.swing.JPanel {
         ));
         jScrollPane11.setViewportView(doctor_table);
 
-        jLabel24.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel24.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
-        jLabel24.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel24.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel24.setText("Update Doctor");
-
         jLabel25.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         jLabel25.setForeground(new java.awt.Color(255, 255, 255));
         jLabel25.setText("Name:");
@@ -1324,6 +1324,12 @@ public class SystemAdminPanel extends javax.swing.JPanel {
         jLabel27.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         jLabel27.setForeground(new java.awt.Color(255, 255, 255));
         jLabel27.setText("BirthDate:");
+
+        doctor_cellno.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                doctor_cellnoActionPerformed(evt);
+            }
+        });
 
         persontable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -1339,6 +1345,11 @@ public class SystemAdminPanel extends javax.swing.JPanel {
         jScrollPane12.setViewportView(persontable1);
 
         save_updateddoctor.setText("Save");
+        save_updateddoctor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                save_updateddoctorActionPerformed(evt);
+            }
+        });
 
         add_doctorBtn.setText("Add Doctor");
         add_doctorBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -1358,13 +1369,13 @@ public class SystemAdminPanel extends javax.swing.JPanel {
 
         hospital_table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Num", "stName", "City", "Zip", "No of Doc"
             }
         ));
         jScrollPane13.setViewportView(hospital_table);
@@ -1392,6 +1403,25 @@ public class SystemAdminPanel extends javax.swing.JPanel {
         });
 
         jButton3.setText("Delete");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
+        jButton4.setText("view");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
+        delDrBtn.setText("Delete");
+        delDrBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                delDrBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout manageDoctorsLayout = new javax.swing.GroupLayout(manageDoctors);
         manageDoctors.setLayout(manageDoctorsLayout);
@@ -1403,8 +1433,8 @@ public class SystemAdminPanel extends javax.swing.JPanel {
                         .addGap(29, 29, 29)
                         .addGroup(manageDoctorsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(manageDoctorsLayout.createSequentialGroup()
-                                .addComponent(jScrollPane13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(100, 100, 100)
+                                .addComponent(jScrollPane13, javax.swing.GroupLayout.PREFERRED_SIZE, 493, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(59, 59, 59)
                                 .addGroup(manageDoctorsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(hospital_dropbox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(update_hospital)
@@ -1422,26 +1452,26 @@ public class SystemAdminPanel extends javax.swing.JPanel {
                                         .addComponent(populatetables, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
                                         .addComponent(hopital_list, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGroup(manageDoctorsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(manageDoctorsLayout.createSequentialGroup()
-                                        .addGap(480, 480, 480)
-                                        .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(manageDoctorsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(manageDoctorsLayout.createSequentialGroup()
-                                            .addGap(520, 520, 520)
-                                            .addGroup(manageDoctorsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                                .addComponent(jLabel26, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(jLabel25, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                        .addComponent(jLabel27, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addGroup(manageDoctorsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(manageDoctorsLayout.createSequentialGroup()
+                                        .addGroup(manageDoctorsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(manageDoctorsLayout.createSequentialGroup()
+                                                .addGap(520, 520, 520)
+                                                .addGroup(manageDoctorsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                    .addComponent(jLabel26, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addComponent(jLabel25, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                            .addComponent(jLabel27, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addGroup(manageDoctorsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(doctor_birthdate, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(doctor_cellno, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(doctor_name, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                     .addGroup(manageDoctorsLayout.createSequentialGroup()
-                                        .addGap(38, 38, 38)
+                                        .addGap(465, 465, 465)
+                                        .addComponent(delDrBtn)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jButton4)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(save_updateddoctor))))))
                     .addGroup(manageDoctorsLayout.createSequentialGroup()
                         .addGap(243, 243, 243)
@@ -1455,7 +1485,7 @@ public class SystemAdminPanel extends javax.swing.JPanel {
         manageDoctorsLayout.setVerticalGroup(
             manageDoctorsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(manageDoctorsLayout.createSequentialGroup()
-                .addContainerGap(33, Short.MAX_VALUE)
+                .addContainerGap(37, Short.MAX_VALUE)
                 .addGroup(manageDoctorsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(community_dropbox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel28)
@@ -1487,7 +1517,8 @@ public class SystemAdminPanel extends javax.swing.JPanel {
                             .addComponent(populatetables)
                             .addComponent(hopital_list, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(save_updateddoctor)
-                            .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jButton4)
+                            .addComponent(delDrBtn)))
                     .addGroup(manageDoctorsLayout.createSequentialGroup()
                         .addGap(46, 46, 46)
                         .addComponent(hospital_dropbox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1497,7 +1528,7 @@ public class SystemAdminPanel extends javax.swing.JPanel {
                         .addGroup(manageDoctorsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jButton2)
                             .addComponent(jButton3))))
-                .addGap(27, 27, 27))
+                .addGap(30, 30, 30))
         );
 
         add(manageDoctors, "card5");
@@ -1508,13 +1539,13 @@ public class SystemAdminPanel extends javax.swing.JPanel {
 
         hospital_table1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "Hosp num", "StreetName", "City", "ZipCode", "No of Docs"
+                "Hosp num", "StreetName", "City", "ZipCode"
             }
         ));
         jScrollPane14.setViewportView(hospital_table1);
@@ -1600,6 +1631,8 @@ public class SystemAdminPanel extends javax.swing.JPanel {
 
         hospAdmin.add(hospital_landingPage, "card2");
 
+        hospitalJPanel.setBackground(new java.awt.Color(0, 118, 82));
+
         zipcodeTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 zipcodeTextFieldActionPerformed(evt);
@@ -1612,12 +1645,20 @@ public class SystemAdminPanel extends javax.swing.JPanel {
             }
         });
 
+        jLabel29.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jLabel29.setForeground(new java.awt.Color(255, 255, 255));
         jLabel29.setText("StreetName");
 
+        jLabel30.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jLabel30.setForeground(new java.awt.Color(255, 255, 255));
         jLabel30.setText("Community");
 
+        jLabel31.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jLabel31.setForeground(new java.awt.Color(255, 255, 255));
         jLabel31.setText("City");
 
+        jLabel32.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jLabel32.setForeground(new java.awt.Color(255, 255, 255));
         jLabel32.setText("Zipcode");
 
         hospNum.addActionListener(new java.awt.event.ActionListener() {
@@ -1626,6 +1667,8 @@ public class SystemAdminPanel extends javax.swing.JPanel {
             }
         });
 
+        jLabel33.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jLabel33.setForeground(new java.awt.Color(255, 255, 255));
         jLabel33.setText("HosNum");
 
         saveHospDetails.setText("Save");
@@ -1651,33 +1694,33 @@ public class SystemAdminPanel extends javax.swing.JPanel {
         hospitalJPanelLayout.setHorizontalGroup(
             hospitalJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(hospitalJPanelLayout.createSequentialGroup()
+                .addGap(346, 346, 346)
                 .addGroup(hospitalJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(hospitalJPanelLayout.createSequentialGroup()
-                        .addGap(41, 41, 41)
                         .addGroup(hospitalJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel33, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel29, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel30, javax.swing.GroupLayout.DEFAULT_SIZE, 99, Short.MAX_VALUE)
-                            .addComponent(jLabel31, javax.swing.GroupLayout.DEFAULT_SIZE, 99, Short.MAX_VALUE)
-                            .addComponent(jLabel32, javax.swing.GroupLayout.DEFAULT_SIZE, 99, Short.MAX_VALUE))
+                            .addComponent(jLabel30, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel31, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel32, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(hospitalJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(hospNum, javax.swing.GroupLayout.DEFAULT_SIZE, 122, Short.MAX_VALUE)
-                            .addComponent(zipcodeTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 122, Short.MAX_VALUE)
-                            .addComponent(streetName, javax.swing.GroupLayout.DEFAULT_SIZE, 122, Short.MAX_VALUE)
+                            .addComponent(hospNum)
+                            .addComponent(zipcodeTextField)
+                            .addComponent(streetName)
                             .addComponent(communityTextField, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(cityJTextField, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(cityJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(38, 38, 38)
                         .addComponent(selectCity))
                     .addGroup(hospitalJPanelLayout.createSequentialGroup()
-                        .addGap(149, 149, 149)
+                        .addGap(108, 108, 108)
                         .addComponent(saveHospDetails, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(555, Short.MAX_VALUE))
+                .addContainerGap(250, Short.MAX_VALUE))
         );
         hospitalJPanelLayout.setVerticalGroup(
             hospitalJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(hospitalJPanelLayout.createSequentialGroup()
-                .addGap(74, 74, 74)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, hospitalJPanelLayout.createSequentialGroup()
+                .addContainerGap(212, Short.MAX_VALUE)
                 .addGroup(hospitalJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel33)
                     .addComponent(hospNum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -1700,10 +1743,12 @@ public class SystemAdminPanel extends javax.swing.JPanel {
                     .addComponent(zipcodeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(32, 32, 32)
                 .addComponent(saveHospDetails)
-                .addContainerGap(312, Short.MAX_VALUE))
+                .addGap(174, 174, 174))
         );
 
         hospAdmin.add(hospitalJPanel, "card3");
+
+        manageDoctorsPanel.setBackground(new java.awt.Color(0, 118, 82));
 
         doctor_table1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -1718,13 +1763,21 @@ public class SystemAdminPanel extends javax.swing.JPanel {
         ));
         jScrollPane15.setViewportView(doctor_table1);
 
+        jLabel34.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jLabel34.setForeground(new java.awt.Color(255, 255, 255));
         jLabel34.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel34.setText("Update Doctor");
 
+        jLabel35.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jLabel35.setForeground(new java.awt.Color(255, 255, 255));
         jLabel35.setText("Name:");
 
+        jLabel36.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jLabel36.setForeground(new java.awt.Color(255, 255, 255));
         jLabel36.setText("Contact No:");
 
+        jLabel37.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jLabel37.setForeground(new java.awt.Color(255, 255, 255));
         jLabel37.setText("BirthDate:");
 
         persontable3.setModel(new javax.swing.table.DefaultTableModel(
@@ -1892,6 +1945,7 @@ public class SystemAdminPanel extends javax.swing.JPanel {
 
     private void updatePersonBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updatePersonBtnActionPerformed
         // TODO add your handling code here:
+        Parser parser = new Parser();
         int selectedRowIndex = persontable.getSelectedRow();
         if (selectedRowIndex < 0) {
             JOptionPane.showMessageDialog(this, "Please select a row to update info");
@@ -1901,11 +1955,19 @@ public class SystemAdminPanel extends javax.swing.JPanel {
         DefaultTableModel model = (DefaultTableModel) persontable.getModel();
         Person personobj = (Person) model.getValueAt(selectedRowIndex, 0);
         personobj.setName(personName1.getText());
-        personobj.setAge(Integer.parseInt(personAge1.getText()));
-        Parser parser = new Parser();
+        if(parser.isInteger(personAge1.getText())){
+            personobj.setAge(Integer.parseInt(personAge1.getText()));
+        }
+        else{JOptionPane.showMessageDialog(this, "Mismatched Types");}
+        
         LocalDate date =parser.convertToDate(personDate1.getText());
         personobj.setDob(date);
-        personobj.setContactNo(Long.parseLong(personContactNo1.getText()));
+        
+        if(parser.isLong(personContactNo1.getText()) || parser.isInteger(personContactNo1.getText())){
+            personobj.setContactNo(Long.parseLong(personContactNo1.getText()));
+        }
+        else{JOptionPane.showMessageDialog(this, "Mismatched Types");}
+        
         personobj.setComm(communityComboBox1.getSelectedItem()+"");
         showPersonTable();
         }
@@ -2030,22 +2092,52 @@ public class SystemAdminPanel extends javax.swing.JPanel {
             return;
         }
         else{
-        DefaultTableModel modelcommunity = (DefaultTableModel) communitytable.getModel();
-        City cityobj = (City) modelcommunity.getValueAt(selectedRowIndex, 0);
-        
-                for(Community comobj: cityobj.getCommList()){
-                    if(comobj.getCommName() == newcommunityComboBox.getSelectedItem()){
-                    cityobj.getCommList().remove(comobj);
-                    showCommunityTable();
-                    JOptionPane.showMessageDialog(this, "Community removed");
+            
+            DefaultTableModel modelcommunity = (DefaultTableModel) communitytable.getModel();
+            String cityobj = String.valueOf( modelcommunity.getValueAt(selectedRowIndex, 0));
+            String commobj = String.valueOf(modelcommunity.getValueAt(selectedRowIndex, 1));
+            for(City c: sys.getCityList()){
+                if(c.getCitName() == cityobj){
+                    city_delcomm = c;
+                    for(Community comm: c.getCommList()){
+                        if(comm.getCommName() == commobj){
+                            comm_del = comm;
+                        }
+                    }
                 }
-                }
+            }
+           
+           for(City c: sys.getCityList()){
+               if(c.getCitName() == city_delcomm.getCitName()){
+                   c.getCommList().remove(comm_del);
+               }
+           }
+        showCommunityTable();  
       
         }
     }//GEN-LAST:event_deleteCommunityBtnActionPerformed
 
     private void updateCommunityBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateCommunityBtnActionPerformed
         // TODO add your handling code here:
+        int selectedRowIndex = communitytable.getSelectedRow();
+        if (selectedRowIndex < 0) {
+            JOptionPane.showMessageDialog(this, "Please select a community to update");
+            return;
+        }
+        else{
+            DefaultTableModel modelcommunity = (DefaultTableModel) communitytable.getModel();
+            String commname = String.valueOf(modelcommunity.getValueAt(selectedRowIndex, 1));
+        
+            for(City c: sys.getCityList()){
+                for(Community com: c.getCommList()){
+                    if(commname == com.getCommName()){
+                        com.setCommName(String.valueOf(newcommunityComboBox.getSelectedItem()));
+                    }
+                }
+            }
+        }
+        
+        showCommunityTable();
     }//GEN-LAST:event_updateCommunityBtnActionPerformed
 
     private void managePatientbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_managePatientbtnActionPerformed
@@ -2153,9 +2245,28 @@ public class SystemAdminPanel extends javax.swing.JPanel {
                         patient = i;
                     }
                 }
-                float bloodPressure = Float.parseFloat(blood_pressure.getText());
-                float heartRate = Float.parseFloat(heart_rate.getText());
-                float weight = Float.parseFloat(weight_ui.getText());
+                
+                if(!parser.checkNull(blood_pressure.getText()) && !parser.isInteger(blood_pressure.getText())){
+                    JOptionPane.showMessageDialog(this, "Type Mismached for BP");
+                }
+                else{
+                    bloodPressure = Float.parseFloat(blood_pressure.getText());
+                }
+                
+                if(!parser.checkNull(heart_rate.getText()) && !parser.isInteger(heart_rate.getText())){
+                    JOptionPane.showMessageDialog(this, "Type Mismached for HR");
+                }
+                else{
+                    heartRate = Float.parseFloat(heart_rate.getText());
+                }
+                
+                if(!parser.checkNull(weight_ui.getText()) && !parser.isInteger(weight_ui.getText())){
+                    JOptionPane.showMessageDialog(this, "Type Mismached for Weight");
+                }
+                else{
+                    weight = Float.parseFloat(weight_ui.getText());
+                }
+
                 String symptoms = symptoms_ui.getText();
 
                 patient.getEncounterHistory().addEncounter(new VitalSigns(bloodPressure, heartRate, weight, symptoms));
@@ -2301,7 +2412,8 @@ public class SystemAdminPanel extends javax.swing.JPanel {
 
     private void add_doctorBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_add_doctorBtnActionPerformed
         // TODO add your handling code here:
-        if(persontable.getSelectedRow()<0){
+        System.out.println("Sel Row"+persontable1.getSelectedRow());
+        if(persontable1.getSelectedRow() < 0){
             JOptionPane.showMessageDialog(this, "Please select a person to add");
         }
         if(hopital_list.getSelectedItem() == null){
@@ -2309,7 +2421,7 @@ public class SystemAdminPanel extends javax.swing.JPanel {
         }
         else
         {
-            long ppn = (long)model12.getValueAt(persontable.getSelectedRow(),1);
+            long ppn = (long)model12.getValueAt(persontable1.getSelectedRow(),1);
             for(Person p : pd.getPersonList()){
                 if(ppn == p.getContactNo()){
                     selectedPerson = p;
@@ -2332,10 +2444,43 @@ public class SystemAdminPanel extends javax.swing.JPanel {
 
             if(!should_doc){
                 selectedHospital.addDoctorToHospital(new Doctor(selectedPerson));
+                docDir.addDoctor(new Doctor(selectedPerson));
+                
+                
                 JOptionPane.showMessageDialog(this, "Added "+selectedPerson.getName()+ " to Hospital");
                 should_doc = false;
+                
+                
+                model11 = (DefaultTableModel) doctor_table.getModel();
+                model11.setRowCount(0);
 
+                for(Doctor dr: docDir.getDoctorList()){
+                    Object[] row = new Object[5];
+                    row[0] = dr.getId();
+                    row[1] = dr.getPerson().getContactNo();
+                    row[2] = dr.getPerson().getName();
+                    row[3] = dr.getPerson().getDob();
+                    model11.addRow(row);
+                    
+                model.setRowCount(0);
+                for(City c: sys.getCityList()){
+                    for(Community comm: c.getCommList()){
+                        for(Hospital h: comm.getHospitalList()){
+                            Object[] row1 = new Object[5];
+                            row1[0]= h.getHospNum();
+                            row1[1]= h.getStreetName();
+                            row1[2]= h.getCity();
+                            row1[3]= h.getZipcode();
+                            row1[4]= (h.getDoctorHospital()).size();
+                            model.addRow(row1);
+                        }
+                    }
+                }
+                
+                 
+                }
             }
+           
 
         }//end else
 
@@ -2392,7 +2537,8 @@ public class SystemAdminPanel extends javax.swing.JPanel {
     private void search_comm1_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_search_comm1_btnActionPerformed
         // TODO add your handling code here:
         selectedCommunity = String.valueOf(community_dropbox.getSelectedItem());
-
+        model = (DefaultTableModel) hospital_table.getModel();
+        model.setRowCount(0);
         for(Community c: city.getCommList()){
             if(selectedCommunity == c.getCommName())
             community = c;
@@ -2477,10 +2623,12 @@ public class SystemAdminPanel extends javax.swing.JPanel {
         else{
             int hospNum_check= (int)model.getValueAt(hospital_table1.getSelectedRow(), 0);
             String hospupdate_str = update_hospital1.getText();
-            for(Community c: city.getCommList()){
-                for(Hospital i: c.getHospitalList()){
-                    if(hospNum_check == i.getHospNum()){
-                        hospital = i;
+            for(City ci: sys.getCityList()){
+                for(Community c: ci.getCommList()){
+                    for(Hospital i: c.getHospitalList()){
+                        if(hospNum_check == i.getHospNum()){
+                            hospital = i;
+                        }
                     }
                 }
             }
@@ -2635,9 +2783,23 @@ public class SystemAdminPanel extends javax.swing.JPanel {
                 Doctor new_doc = new Doctor(selectedPerson);
                 selectedHospital.addDoctorToHospital(new_doc);
                 docDir.addDoctor(new_doc);
+                
+                for(City c: sys.getCityList()){
+                    for(Community comm: c.getCommList()){
+                        for(Hospital h: comm.getHospitalList()){
+                            if(h == selectedHospital){
+                                h.addDoctorToHospital(new_doc);
+                                System.out.print("Added "+new_doc.getPerson().getName()+ " to "+h.getHospNum());
+                            }
+                        }
+                    }
+                }
+                
                 JOptionPane.showMessageDialog(this, "Added "+selectedPerson.getName()+ " to Hospital");
+                populateHospTable1();
                 should_doc = false;
                 PopulateManageDoctorTable();
+                
             }
 
         }//end else
@@ -2690,7 +2852,7 @@ public class SystemAdminPanel extends javax.swing.JPanel {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        DefaultTableModel model11 = (DefaultTableModel) doctor_table1.getModel();
+        model11 = (DefaultTableModel) doctor_table1.getModel();
 
         if(doctor_table1.getSelectedRow()>=0){
             long did_table = (long)model11.getValueAt(doctor_table1.getSelectedRow(),0);
@@ -2782,31 +2944,165 @@ public class SystemAdminPanel extends javax.swing.JPanel {
 
     private void createPersonBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createPersonBtnActionPerformed
         // TODO add your handling code here:
+        Parser parser = new Parser();
         Person newPerson = new Person();
         newPerson.setName(personName.getText());
-        newPerson.setAge(Integer.parseInt(personAge.getText()));
-        //         String dob = "1-Jan-2021";
-        Parser parser = new Parser();
+        if(parser.isInteger(personAge.getText())){
+            newPerson.setAge(Integer.parseInt(personAge.getText()));
+        }
+        else{JOptionPane.showMessageDialog(this, "Type Mismached");}
         LocalDate date =parser.convertToDate(personDate.getText());
         newPerson.setDob(date);
-        newPerson.setContactNo(Long.parseLong(personContactNo.getText()));
+        
+        if(parser.isLong(personContactNo.getText()) || parser.isInteger(personContactNo.getText())){
+            newPerson.setContactNo(Long.parseLong(personContactNo.getText()));
+        }
+        else{JOptionPane.showMessageDialog(this, "Type Mismached");}
+        
         newPerson.setComm(communityComboBox.getSelectedItem()+"");
         pd.addPersonToDirectory(newPerson);
         showPersonTable();
 
     }//GEN-LAST:event_createPersonBtnActionPerformed
+
+    private void save_updateddoctorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_save_updateddoctorActionPerformed
+        // TODO add your handling code here:
+        long dno_table = 2345634;
+        String dname_table = String.valueOf(doctor_name.getText());
+        if(parser.isLong(doctor_cellno.getText()) || parser.isInteger(doctor_cellno.getText())){
+            dno_table = Long.parseLong(doctor_cellno.getText());
+        }
+        else{ JOptionPane.showMessageDialog(this, "Type Mismached"); }
+        
+        LocalDate ddon_table = parser.convertToDate(doctor_birthdate.getText());
+        update_doc_obj.getPerson().setName(dname_table);
+        update_doc_obj.getPerson().setContactNo(dno_table);
+        update_doc_obj.getPerson().setDob(ddon_table);
+        
+        DefaultTableModel model11 = (DefaultTableModel) doctor_table.getModel();
+        model11.setRowCount(0);
+
+        for(Doctor dr: docDir.getDoctorList()){
+            Object[] row = new Object[5];
+            row[0] = dr.getId();
+            row[1] = dr.getPerson().getContactNo();
+            row[2] = dr.getPerson().getName();
+            row[3] = dr.getPerson().getDob();
+            row[4] = community.getCommName();
+            model11.addRow(row);
+        }
+    }//GEN-LAST:event_save_updateddoctorActionPerformed
+
+    private void doctor_cellnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_doctor_cellnoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_doctor_cellnoActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        model11 = (DefaultTableModel) doctor_table.getModel();
+        
+        if(doctor_table.getSelectedRow()>=0){
+            long did_table = (long)model11.getValueAt(doctor_table.getSelectedRow(),0);
+            
+            for(Hospital h : hospDir.getHospitalList()){
+                for(Doctor d: h.getDoctorHospital()){
+                    if(did_table == d.getId()){
+                        update_doc_obj = d;
+                        doctor_name.setText(d.getPerson().getName());
+                        doctor_cellno.setText(String.valueOf(d.getPerson().getContactNo()));
+                        doctor_birthdate.setText(parser.covertDateToString(d.getPerson().getDob()));
+                    }
+                }
+            }
+        }
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        model11 = (DefaultTableModel) hospital_table.getModel();
+        boolean flagg = true;
+        if(hospital_table.getSelectedRow() >= 0){
+            int hosp_num_del = (int)model11.getValueAt(hospital_table.getSelectedRow(),0);
+        
+            for(Hospital h: hospDir.getHospitalList()){
+                System.out.println("Delete Hos: "+h.getHospNum()+ " Size: "+(h.getDoctorHospital()).size()+" UI: "+hosp_num_del);
+                if( (h.getHospNum() == hosp_num_del) && ( (h.getDoctorHospital()).size() == 0))
+                {   
+                    to_delete = h;
+                    JOptionPane.showMessageDialog(this,"Deleted");
+                    flagg = false;
+                }
+            }
+            hospDir.getHospitalList().remove(to_delete);
+            for(City c: system.getCityList()){
+                for(Community comm: c.getCommList()){
+                    for(Hospital hos: comm.getHospitalList()){
+                        if(hos.getHospNum() == hosp_num_del){
+                            comm_delHosp = comm;         
+                        }
+                    }
+                }
+            }
+            comm_delHosp.getHospitalList().remove(to_delete);
+
+            populateHospTable();
+        }
+        else{
+            JOptionPane.showMessageDialog(this,"Please Select a Hospital");
+        }
+        
+        if(flagg == true){
+            JOptionPane.showMessageDialog(this,"Cannot Delete Hospital with Patients");
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void delDrBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delDrBtnActionPerformed
+        // TODO add your handling code here:
+        model11 = (DefaultTableModel) doctor_table.getModel();
+        long delete_hid = (long) model11.getValueAt(doctor_table.getSelectedRow(), 0);
+        System.out.println(delete_hid);
+        
+        for(Doctor d: docDir.getDoctorList()){
+            if(delete_hid == d.getId()){
+                to_del_doc = d;
+            }
+        }
+        System.out.println(to_del_doc.getPerson().getName());
+        docDir.getDoctorList().remove(to_del_doc);
+        
+        for(City c: sys.getCityList()){
+            for(Community com: c.getCommList()){
+                for(Hospital hos: com.getHospitalList()){
+                        hosp_dupl = hos;
+                }
+            }
+        }
+        
+        if(hosp_dupl.getDoctorHospital().contains(to_del_doc)){
+                        hosp_dupl.getDoctorHospital().remove(to_del_doc);
+                        JOptionPane.showMessageDialog(this,"Doctor " +to_del_doc.getPerson().getName()+" Deleted!");
+        }
+        PopulateManageDoctorTable1();
+        
+    }//GEN-LAST:event_delDrBtnActionPerformed
     
     public void populateHospTable1(){
+        model = (DefaultTableModel) hospital_table1.getModel();
+        model11 = (DefaultTableModel) hospital_table.getModel();
         model.setRowCount(0);
-        for(Community c: city.getCommList()){
-            for(Hospital h: c.getHospitalList()){
-                Object[] row = new Object[5];
-                row[0]= h.getHospNum();
-                row[1]= h.getStreetName();
-                row[2]= h.getCity();
-                row[3]= h.getZipcode();
-                row[4]= (h.getDoctorHospital()).size();
-                model.addRow(row);
+        model11.setRowCount(0);
+        for(City ci: sys.getCityList()){
+            for(Community c: ci.getCommList()){
+                for(Hospital h: c.getHospitalList()){
+                    Object[] row = new Object[5];
+                    row[0]= h.getHospNum();
+                    row[1]= h.getStreetName();
+                    row[2]= h.getCity();
+                    row[3]= h.getZipcode();
+                    row[4]= (h.getDoctorHospital()).size();
+                    model.addRow(row);
+                    model11.addRow(row);
+                }
             }
         }
     }
@@ -2913,6 +3209,22 @@ public class SystemAdminPanel extends javax.swing.JPanel {
             row[3] = dr.getPerson().getDob();
             model11.addRow(row);
         }
+        
+    }
+    
+    public void PopulateManageDoctorTable1(){
+        model11 = (DefaultTableModel) doctor_table.getModel();
+        model11.setRowCount(0);
+        
+        for(Doctor d: docDir.getDoctorList()){
+            Object[] row= new Object[5];
+            row[0] = d.getId();
+            row[1] = d.getPerson().getContactNo();
+            row[2] = d.getPerson().getName();
+            row[3] = d.getPerson().getAge();
+            row[4] = d.getPerson().getComm();
+            model11.addRow(row);
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -2936,6 +3248,7 @@ public class SystemAdminPanel extends javax.swing.JPanel {
     private javax.swing.JButton createCommunityBtn;
     private javax.swing.JButton createPersonBtn;
     private javax.swing.JButton create_hospital_btn;
+    private javax.swing.JButton delDrBtn;
     private javax.swing.JButton deleteCityBtn;
     private javax.swing.JButton deleteCommunityBtn;
     private javax.swing.JButton deleteEncounter;
@@ -2966,6 +3279,7 @@ public class SystemAdminPanel extends javax.swing.JPanel {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -2982,7 +3296,6 @@ public class SystemAdminPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
-    private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
